@@ -1,0 +1,1872 @@
+{
+  "timestamp": "2026-09-17T07:46:31.410272+00:00",
+  "baseline_model": "qwen3:8b",
+  "final_model": "qwen3:8b",
+  "router_model": "qwen2.5:3b",
+  "timeout_seconds": 300,
+  "working_directory": "C:\\ai-technical-analyst",
+  "metric_note": "Engineering proxies only; not an academic benchmark.",
+  "overall": {
+    "total_cases": 6,
+    "baseline_success_rate": 0.8333333333333334,
+    "agent_success_rate": 0.8333333333333334,
+    "baseline_timeout_rate": 0.0,
+    "agent_timeout_rate": 0.16666666666666666,
+    "average_baseline_latency": 88.56748985000256,
+    "average_agent_latency": 121.23625058000326,
+    "average_agent_evidence_coverage": 0.2,
+    "citation_traceability_rate": 0.8,
+    "evidence_sufficiency_rate": 0.2
+  },
+  "results": [
+    {
+      "case_id": "T1",
+      "category": "pure_technical",
+      "question": "解释 ResNet18 的残差连接为什么能够缓解深层网络训练中的梯度消失问题。",
+      "baseline_answer": "",
+      "agent_answer": "## 参考来源  \n- [Evidence 1]  \n- [Evidence 2]  \n\nResNet18 的残差连接设计通过引入跨层的捷径连接（skip connection），允许梯度在反向传播时直接绕过部分网络层，从而缓解深层网络中的梯度消失问题。然而，当前提供的 Evidence 未直接涉及 ResNet18 的具体架构或残差连接机制，也未明确讨论其对梯度消失问题的缓解效果。  \n\n### 关键分析  \n1. **残差连接的通用原理**  \n   残差连接通过将输入特征直接加到输出特征上，形成“恒等映射”路径。这种设计减少了网络深度对梯度传播的阻碍，使梯度能够更直接地流动，避免因层数过多导致的梯度消失 [Evidence 1]。  \n\n2. **证据覆盖不足**  \n   所有提供的 Evidence 均围绕 DenseFieldNet 架构展开，未提及 ResNet18 的残差连接实现细节或其对梯度消失问题的具体影响。因此，无法基于现有资料验证 ResNet18 的残差连接是否具备类似机制或效果。  \n\n### 结论  \n由于 Evidence 缺乏对 ResNet18 的直接描述，无法确定其残差连接是否缓解梯度消失问题。建议补充相关技术文档或实验数据以进一步分析。  \n\n## 参考来源  \n- [Evidence 1]  \n- [Evidence 2]",
+      "baseline_status": "exception",
+      "agent_status": "success",
+      "baseline_latency": 15.96351329999743,
+      "agent_latency": 113.46947709999222,
+      "observations": [
+        {
+          "step": 1,
+          "action": "RAG",
+          "query": "ResNet18 残差连接 缓解 梯度消失",
+          "tool_result": {
+            "success": true,
+            "source": "local_rag",
+            "content": "【本地知识片段】\nNet) 架构设计  \n针对本课题对亚像素精度的严苛要求，本方案自主设计了  DenseFieldNet 密集回归架\n构。该网络并非简单的图像分类器，而是具备空间感知能力的物理信息提取器。  \n1. 编码器与特征提取逻辑  \n网络前端采用深层卷积堆叠结构作为编码器， 利用残差感知机制提取光斑边缘的微弱梯\n度变化。通过多层卷积核的滑动扫描，模型能够敏感地捕捉到由于折射引起的“红绿月牙”\n式特征偏移。  \n2. 解码器与密集场对齐层  \n\n \n 在解码阶段，网络引入了自适应全局池化层，将其强制映射至 8 x8的输出矩阵。每一组\n输出对应于物理空间中的一个特定光斑。这种“物理 -神经网络”一一对应的设计方案，显\n著降低了传统全连接层带来的参数冗余，提高了模型的解释性[8]。 \n3. 张量维度演变与感受野分析  \nDenseFieldNet 的有效性不仅建立在宏观架构上，更体现在其精确的张量维度控制中。  \n当一张尺寸为 512x512的单通道灰度图像输入网络时，其初始张量形状为 [Batch_Size,\n 1,512,512] 。 \n(1) 浅层特征提取： 数据首先经过  kernel_si\n\n【本地知识片段】\n} 超过0.03时，模型精度会出现约 15%的退化。这说明模型\n在提取“物理梯度”时，仍受限于光学探测器的固有噪声地板。通过进一步引入自适应去噪\n前端，有望进一步提升在极低剂量  X 射线环境下的反演稳定性。  \n四、结论  \n本研究针对  X 射线折射图像位移提取的精度瓶颈，提出并实现了一种基于  DenseFiel\ndNet 的密集回归算法管线。通过本次科研训练，得出以下主要结论：  \n1. 物理仿真引擎的有效性  \n自主研发的  V4 引擎通过二进制格式  (.npy) 存储与高斯势场模拟，成功突破了传统\n图像 8 位量化的精度上限，为亚像素研究提供了可靠的实验温床。  \n2. DenseFieldNet 的高精度表现  \n实验数据表明，该架构在± 5像素量程内实现了平均绝对误差  (MAE) 低0.08像素的极\n高精度，显著优于传统一阶解析算法。  \n3. Sim-to-Real 的可行性  \n通过三联图对 指导教师 提供的模拟样本进行审计， 证明了模型在引入复杂物理噪声后仍\n具备极强的泛化性能与鲁棒性，具备了部署至真实  X 射线折射成像系统的工程潜力[9]。 \n \n五、参考\n\n【本地知识片段】\n均值。这种漏斗状的数据压缩路径，强制网络摒弃了所有与位移\n无关的图像纹理，实现了纯粹的物理信息蒸馏。  \n（四）训练策略与损失函数优化  \n1. 损失函数的精密选择  \n在本课题中，我们摒弃了均方误差  (MSE)，转而采用  HuberLoss 作为核心损失函数。\n由于亚像素任务对极微小误差极其敏感， MSE 在残差接近零时梯度消失过快，而  HuberLos\ns 能在小误差区间保持线性梯度强度，从而帮助模型“压榨”出最后一公里的精度。  \n2. 训练超参数与软硬件配置  \n优化器： 选用 AdamW，并配合学习率余弦退火衰减策略，确保模型在训练后期不会产生\n震荡。 \n训练规模： 基于 1000 组非均匀样本进行  120 轮全量迭代。  \n硬件环境： 基于 Google Colab 平台的计算资源，利用高性能显卡实现并行梯度下降。  \n \n 三、结果与讨论  \n（一）模型训练性能与收敛性分析  \n本研究在高性能计算平台上对  DenseFieldNet 进行了 120 轮的全量迭代训练。为了\n榨取亚像素级的精度，训练过程采用了学习率余弦退火策略，初始学习率设定为 1x10^-4。 ",
+            "metadata": {
+              "top_k": 3,
+              "result_count": 3
+            }
+          }
+        },
+        {
+          "step": 2,
+          "action": "SEARCH",
+          "query": "ResNet18",
+          "tool_result": {
+            "success": false,
+            "source": "web",
+            "error": "搜索请求超过 10 秒，已超时。"
+          }
+        },
+        {
+          "step": 3,
+          "action": "RAG",
+          "query": "ResNet18 残差连接 梯度消失",
+          "tool_result": {
+            "success": true,
+            "source": "local_rag",
+            "content": "【本地知识片段】\nNet) 架构设计  \n针对本课题对亚像素精度的严苛要求，本方案自主设计了  DenseFieldNet 密集回归架\n构。该网络并非简单的图像分类器，而是具备空间感知能力的物理信息提取器。  \n1. 编码器与特征提取逻辑  \n网络前端采用深层卷积堆叠结构作为编码器， 利用残差感知机制提取光斑边缘的微弱梯\n度变化。通过多层卷积核的滑动扫描，模型能够敏感地捕捉到由于折射引起的“红绿月牙”\n式特征偏移。  \n2. 解码器与密集场对齐层  \n\n \n 在解码阶段，网络引入了自适应全局池化层，将其强制映射至 8 x8的输出矩阵。每一组\n输出对应于物理空间中的一个特定光斑。这种“物理 -神经网络”一一对应的设计方案，显\n著降低了传统全连接层带来的参数冗余，提高了模型的解释性[8]。 \n3. 张量维度演变与感受野分析  \nDenseFieldNet 的有效性不仅建立在宏观架构上，更体现在其精确的张量维度控制中。  \n当一张尺寸为 512x512的单通道灰度图像输入网络时，其初始张量形状为 [Batch_Size,\n 1,512,512] 。 \n(1) 浅层特征提取： 数据首先经过  kernel_si\n\n【本地知识片段】\n} 超过0.03时，模型精度会出现约 15%的退化。这说明模型\n在提取“物理梯度”时，仍受限于光学探测器的固有噪声地板。通过进一步引入自适应去噪\n前端，有望进一步提升在极低剂量  X 射线环境下的反演稳定性。  \n四、结论  \n本研究针对  X 射线折射图像位移提取的精度瓶颈，提出并实现了一种基于  DenseFiel\ndNet 的密集回归算法管线。通过本次科研训练，得出以下主要结论：  \n1. 物理仿真引擎的有效性  \n自主研发的  V4 引擎通过二进制格式  (.npy) 存储与高斯势场模拟，成功突破了传统\n图像 8 位量化的精度上限，为亚像素研究提供了可靠的实验温床。  \n2. DenseFieldNet 的高精度表现  \n实验数据表明，该架构在± 5像素量程内实现了平均绝对误差  (MAE) 低0.08像素的极\n高精度，显著优于传统一阶解析算法。  \n3. Sim-to-Real 的可行性  \n通过三联图对 指导教师 提供的模拟样本进行审计， 证明了模型在引入复杂物理噪声后仍\n具备极强的泛化性能与鲁棒性，具备了部署至真实  X 射线折射成像系统的工程潜力[9]。 \n \n五、参考\n\n【本地知识片段】\n均值。这种漏斗状的数据压缩路径，强制网络摒弃了所有与位移\n无关的图像纹理，实现了纯粹的物理信息蒸馏。  \n（四）训练策略与损失函数优化  \n1. 损失函数的精密选择  \n在本课题中，我们摒弃了均方误差  (MSE)，转而采用  HuberLoss 作为核心损失函数。\n由于亚像素任务对极微小误差极其敏感， MSE 在残差接近零时梯度消失过快，而  HuberLos\ns 能在小误差区间保持线性梯度强度，从而帮助模型“压榨”出最后一公里的精度。  \n2. 训练超参数与软硬件配置  \n优化器： 选用 AdamW，并配合学习率余弦退火衰减策略，确保模型在训练后期不会产生\n震荡。 \n训练规模： 基于 1000 组非均匀样本进行  120 轮全量迭代。  \n硬件环境： 基于 Google Colab 平台的计算资源，利用高性能显卡实现并行梯度下降。  \n \n 三、结果与讨论  \n（一）模型训练性能与收敛性分析  \n本研究在高性能计算平台上对  DenseFieldNet 进行了 120 轮的全量迭代训练。为了\n榨取亚像素级的精度，训练过程采用了学习率余弦退火策略，初始学习率设定为 1x10^-4。 ",
+            "metadata": {
+              "top_k": 3,
+              "result_count": 3
+            }
+          }
+        },
+        {
+          "step": 4,
+          "action": "SEARCH",
+          "query": "ResNet18 官方文档",
+          "tool_result": {
+            "success": false,
+            "source": "web",
+            "error": "搜索请求超过 10 秒，已超时。"
+          }
+        }
+      ],
+      "verification": {
+        "success": false,
+        "verified_evidence": [
+          {
+            "evidence_id": 1,
+            "source": "local_rag",
+            "source_type": "local_document",
+            "source_quality": "high",
+            "step": 1,
+            "action": "RAG",
+            "query": "ResNet18 残差连接 缓解 梯度消失",
+            "content": "【本地知识片段】\nNet) 架构设计  \n针对本课题对亚像素精度的严苛要求，本方案自主设计了  DenseFieldNet 密集回归架\n构。该网络并非简单的图像分类器，而是具备空间感知能力的物理信息提取器。  \n1. 编码器与特征提取逻辑  \n网络前端采用深层卷积堆叠结构作为编码器， 利用残差感知机制提取光斑边缘的微弱梯\n度变化。通过多层卷积核的滑动扫描，模型能够敏感地捕捉到由于折射引起的“红绿月牙”\n式特征偏移。  \n2. 解码器与密集场对齐层  \n\n \n 在解码阶段，网络引入了自适应全局池化层，将其强制映射至 8 x8的输出矩阵。每一组\n输出对应于物理空间中的一个特定光斑。这种“物理 -神经网络”一一对应的设计方案，显\n著降低了传统全连接层带来的参数冗余，提高了模型的解释性[8]。 \n3. 张量维度演变与感受野分析  \nDenseFieldNet 的有效性不仅建立在宏观架构上，更体现在其精确的张量维度控制中。  \n当一张尺寸为 512x512的单通道灰度图像输入网络时，其初始张量形状为 [Batch_Size,\n 1,512,512] 。 \n(1) 浅层特征提取： 数据首先经过  kernel_si\n\n【本地知识片段】\n} 超过0.03时，模型精度会出现约 15%的退化。这说明模型\n在提取“物理梯度”时，仍受限于光学探测器的固有噪声地板。通过进一步引入自适应去噪\n前端，有望进一步提升在极低剂量  X 射线环境下的反演稳定性。  \n四、结论  \n本研究针对  X 射线折射图像位移提取的精度瓶颈，提出并实现了一种基于  DenseFiel\ndNet 的密集回归算法管线。通过本次科研训练，得出以下主要结论：  \n1. 物理仿真引擎的有效性  \n自主研发的  V4 引擎通过二进制格式  (.npy) 存储与高斯势场模拟，成功突破了传统\n图像 8 位量化的精度上限，为亚像素研究提供了可靠的实验温床。  \n2. DenseFieldNet 的高精度表现  \n实验数据表明，该架构在± 5像素量程内实现了平均绝对误差  (MAE) 低0.08像素的极\n高精度，显著优于传统一阶解析算法。  \n3. Sim-to-Real 的可行性  \n通过三联图对 指导教师 提供的模拟样本进行审计， 证明了模型在引入复杂物理噪声后仍\n具备极强的泛化性能与鲁棒性，具备了部署至真实  X 射线折射成像系统的工程潜力[9]。 \n \n五、参考\n\n【本地知识片段】\n均值。这种漏斗状的数据压缩路径，强制网络摒弃了所有与位移\n无关的图像纹理，实现了纯粹的物理信息蒸馏。  \n（四）训练策略与损失函数优化  \n1. 损失函数的精密选择  \n在本课题中，我们摒弃了均方误差  (MSE)，转而采用  HuberLoss 作为核心损失函数。\n由于亚像素任务对极微小误差极其敏感， MSE 在残差接近零时梯度消失过快，而  HuberLos\ns 能在小误差区间保持线性梯度强度，从而帮助模型“压榨”出最后一公里的精度。  \n2. 训练超参数与软硬件配置  \n优化器： 选用 AdamW，并配合学习率余弦退火衰减策略，确保模型在训练后期不会产生\n震荡。 \n训练规模： 基于 1000 组非均匀样本进行  120 轮全量迭代。  \n硬件环境： 基于 Google Colab 平台的计算资源，利用高性能显卡实现并行梯度下降。  \n \n 三、结果与讨论  \n（一）模型训练性能与收敛性分析  \n本研究在高性能计算平台上对  DenseFieldNet 进行了 120 轮的全量迭代训练。为了\n榨取亚像素级的精度，训练过程采用了学习率余弦退火策略，初始学习率设定为 1x10^-4。 ",
+            "metadata": {
+              "top_k": 3,
+              "result_count": 3
+            },
+            "urls": []
+          },
+          {
+            "evidence_id": 2,
+            "source": "local_rag",
+            "source_type": "local_document",
+            "source_quality": "high",
+            "step": 3,
+            "action": "RAG",
+            "query": "ResNet18 残差连接 梯度消失",
+            "content": "【本地知识片段】\nNet) 架构设计  \n针对本课题对亚像素精度的严苛要求，本方案自主设计了  DenseFieldNet 密集回归架\n构。该网络并非简单的图像分类器，而是具备空间感知能力的物理信息提取器。  \n1. 编码器与特征提取逻辑  \n网络前端采用深层卷积堆叠结构作为编码器， 利用残差感知机制提取光斑边缘的微弱梯\n度变化。通过多层卷积核的滑动扫描，模型能够敏感地捕捉到由于折射引起的“红绿月牙”\n式特征偏移。  \n2. 解码器与密集场对齐层  \n\n \n 在解码阶段，网络引入了自适应全局池化层，将其强制映射至 8 x8的输出矩阵。每一组\n输出对应于物理空间中的一个特定光斑。这种“物理 -神经网络”一一对应的设计方案，显\n著降低了传统全连接层带来的参数冗余，提高了模型的解释性[8]。 \n3. 张量维度演变与感受野分析  \nDenseFieldNet 的有效性不仅建立在宏观架构上，更体现在其精确的张量维度控制中。  \n当一张尺寸为 512x512的单通道灰度图像输入网络时，其初始张量形状为 [Batch_Size,\n 1,512,512] 。 \n(1) 浅层特征提取： 数据首先经过  kernel_si\n\n【本地知识片段】\n} 超过0.03时，模型精度会出现约 15%的退化。这说明模型\n在提取“物理梯度”时，仍受限于光学探测器的固有噪声地板。通过进一步引入自适应去噪\n前端，有望进一步提升在极低剂量  X 射线环境下的反演稳定性。  \n四、结论  \n本研究针对  X 射线折射图像位移提取的精度瓶颈，提出并实现了一种基于  DenseFiel\ndNet 的密集回归算法管线。通过本次科研训练，得出以下主要结论：  \n1. 物理仿真引擎的有效性  \n自主研发的  V4 引擎通过二进制格式  (.npy) 存储与高斯势场模拟，成功突破了传统\n图像 8 位量化的精度上限，为亚像素研究提供了可靠的实验温床。  \n2. DenseFieldNet 的高精度表现  \n实验数据表明，该架构在± 5像素量程内实现了平均绝对误差  (MAE) 低0.08像素的极\n高精度，显著优于传统一阶解析算法。  \n3. Sim-to-Real 的可行性  \n通过三联图对 指导教师 提供的模拟样本进行审计， 证明了模型在引入复杂物理噪声后仍\n具备极强的泛化性能与鲁棒性，具备了部署至真实  X 射线折射成像系统的工程潜力[9]。 \n \n五、参考\n\n【本地知识片段】\n均值。这种漏斗状的数据压缩路径，强制网络摒弃了所有与位移\n无关的图像纹理，实现了纯粹的物理信息蒸馏。  \n（四）训练策略与损失函数优化  \n1. 损失函数的精密选择  \n在本课题中，我们摒弃了均方误差  (MSE)，转而采用  HuberLoss 作为核心损失函数。\n由于亚像素任务对极微小误差极其敏感， MSE 在残差接近零时梯度消失过快，而  HuberLos\ns 能在小误差区间保持线性梯度强度，从而帮助模型“压榨”出最后一公里的精度。  \n2. 训练超参数与软硬件配置  \n优化器： 选用 AdamW，并配合学习率余弦退火衰减策略，确保模型在训练后期不会产生\n震荡。 \n训练规模： 基于 1000 组非均匀样本进行  120 轮全量迭代。  \n硬件环境： 基于 Google Colab 平台的计算资源，利用高性能显卡实现并行梯度下降。  \n \n 三、结果与讨论  \n（一）模型训练性能与收敛性分析  \n本研究在高性能计算平台上对  DenseFieldNet 进行了 120 轮的全量迭代训练。为了\n榨取亚像素级的精度，训练过程采用了学习率余弦退火策略，初始学习率设定为 1x10^-4。 ",
+            "metadata": {
+              "top_k": 3,
+              "result_count": 3
+            },
+            "urls": []
+          }
+        ],
+        "warnings": [
+          "忽略失败或不支持的 observation（step 2）：工具执行失败。",
+          "忽略失败或不支持的 observation（step 4）：工具执行失败。"
+        ],
+        "coverage": {
+          "covered_terms": [],
+          "missing_terms": [
+            "ResNet18"
+          ],
+          "coverage_ratio": 0.0,
+          "warnings": []
+        },
+        "summary": "检查完成：2 条成功 Evidence，2 条 warning。"
+      },
+      "metrics": {
+        "baseline": {
+          "task_completion": null,
+          "evidence_coverage": null,
+          "citation_traceability": null,
+          "evidence_sufficiency": null,
+          "latency": 15.96351329999743
+        },
+        "agent": {
+          "task_completion": 1.0,
+          "evidence_coverage": 0.0,
+          "citation_traceability": 1.0,
+          "evidence_sufficiency": 0.0,
+          "latency": 113.46947709999222
+        }
+      },
+      "baseline_error": "llama-server process has terminated: exit status 0xc0000409: The system detected an overrun of a stack-based buffer in this application. This overrun could potentially allow a malicious user to gain control of this application.: CUDA error: shared object initialization failed\nCUDA error (status code: 500)",
+      "agent_error": "web: 搜索请求超过 10 秒，已超时。; web: 搜索请求超过 10 秒，已超时。",
+      "agent_events": [
+        {
+          "step": 1,
+          "stage": "router",
+          "action": "ROUTER",
+          "query": "",
+          "status": "running",
+          "success": null,
+          "elapsed": 7.480000203941017e-05
+        },
+        {
+          "step": 1,
+          "stage": "router",
+          "action": "ROUTER",
+          "query": "",
+          "status": "completed",
+          "success": true,
+          "elapsed": 4.207022899994627
+        },
+        {
+          "step": 1,
+          "action": "RAG",
+          "query": "ResNet18 残差连接 缓解 梯度消失",
+          "status": "running",
+          "success": null,
+          "elapsed": 4.20729210000718
+        },
+        {
+          "step": 1,
+          "stage": "tool",
+          "action": "RAG",
+          "query": "ResNet18 残差连接 缓解 梯度消失",
+          "status": "running",
+          "success": null,
+          "elapsed": 4.207299999994575
+        },
+        {
+          "step": 1,
+          "stage": "tool",
+          "action": "RAG",
+          "query": "ResNet18 残差连接 缓解 梯度消失",
+          "status": "completed",
+          "success": true,
+          "error": null,
+          "elapsed": 5.4033134000055725
+        },
+        {
+          "step": 2,
+          "stage": "router",
+          "action": "ROUTER",
+          "query": "",
+          "status": "running",
+          "success": null,
+          "elapsed": 5.4033351999969454
+        },
+        {
+          "step": 2,
+          "stage": "router",
+          "action": "ROUTER",
+          "query": "",
+          "status": "completed",
+          "success": true,
+          "elapsed": 6.609137599996757
+        },
+        {
+          "step": 2,
+          "action": "SEARCH",
+          "query": "ResNet18",
+          "status": "running",
+          "success": null,
+          "elapsed": 6.610479900002247
+        },
+        {
+          "step": 2,
+          "stage": "tool",
+          "action": "SEARCH",
+          "query": "ResNet18",
+          "status": "running",
+          "success": null,
+          "elapsed": 6.610491500003263
+        },
+        {
+          "step": 2,
+          "stage": "tool",
+          "action": "SEARCH",
+          "query": "ResNet18",
+          "status": "completed",
+          "success": false,
+          "error": "搜索请求超过 10 秒，已超时。",
+          "elapsed": 16.611744199995883
+        },
+        {
+          "step": 3,
+          "stage": "router",
+          "action": "ROUTER",
+          "query": "",
+          "status": "running",
+          "success": null,
+          "elapsed": 16.611765499998
+        },
+        {
+          "step": 3,
+          "stage": "router",
+          "action": "ROUTER",
+          "query": "",
+          "status": "completed",
+          "success": true,
+          "elapsed": 17.629210400002194
+        },
+        {
+          "step": 3,
+          "action": "RAG",
+          "query": "ResNet18 残差连接 梯度消失",
+          "status": "running",
+          "success": null,
+          "elapsed": 17.629371500006528
+        },
+        {
+          "step": 3,
+          "stage": "tool",
+          "action": "RAG",
+          "query": "ResNet18 残差连接 梯度消失",
+          "status": "running",
+          "success": null,
+          "elapsed": 17.629382600003737
+        },
+        {
+          "step": 3,
+          "stage": "tool",
+          "action": "RAG",
+          "query": "ResNet18 残差连接 梯度消失",
+          "status": "completed",
+          "success": true,
+          "error": null,
+          "elapsed": 17.66629190000822
+        },
+        {
+          "step": 4,
+          "stage": "router",
+          "action": "ROUTER",
+          "query": "",
+          "status": "running",
+          "success": null,
+          "elapsed": 17.66630680000526
+        },
+        {
+          "step": 4,
+          "stage": "router",
+          "action": "ROUTER",
+          "query": "",
+          "status": "completed",
+          "success": true,
+          "elapsed": 18.86019639999722
+        },
+        {
+          "step": 4,
+          "action": "SEARCH",
+          "query": "ResNet18",
+          "status": "running",
+          "success": null,
+          "elapsed": 18.860334400000283
+        },
+        {
+          "step": 4,
+          "stage": "tool",
+          "action": "SEARCH",
+          "query": "ResNet18 官方文档",
+          "status": "running",
+          "success": null,
+          "elapsed": 18.860344800006715
+        },
+        {
+          "step": 4,
+          "stage": "tool",
+          "action": "SEARCH",
+          "query": "ResNet18 官方文档",
+          "status": "completed",
+          "success": false,
+          "error": "搜索请求超过 10 秒，已超时。",
+          "elapsed": 28.868164700004854
+        },
+        {
+          "step": 4,
+          "stage": "final",
+          "action": "FINAL",
+          "query": "",
+          "status": "running",
+          "success": null,
+          "elapsed": 28.868636200000765
+        },
+        {
+          "step": 4,
+          "stage": "final",
+          "action": "FINAL",
+          "query": "",
+          "status": "completed",
+          "success": true,
+          "elapsed": 111.67749440000625
+        }
+      ],
+      "agent_last_event": {
+        "step": 4,
+        "stage": "final",
+        "action": "FINAL",
+        "query": "",
+        "status": "completed",
+        "success": true,
+        "elapsed": 111.67749440000625
+      }
+    },
+    {
+      "case_id": "T2",
+      "category": "comparison",
+      "question": "比较 AgentBench、SWE-bench 和 GAIA 的测试目标、评测方式和主要局限性。",
+      "baseline_answer": "以下是对 **AgentBench**、**SWE-bench** 和 **GAIA** 的测试目标、评测方式及主要局限性的对比分析：\n\n---\n\n### **1. 测试目标**\n| 项目         | 测试目标                                                                 |\n|--------------|--------------------------------------------------------------------------|\n| **AgentBench** | 评估多智能体系统（Multi-Agent Systems, MAS）在协作、竞争和复杂任务中的表现，重点关注**交互能力**和**任务完成效率**。 |\n| **SWE-bench**  | 聚焦**软件工程**领域，测试智能体在代码生成、修复、重构等任务中的**工程能力**，强调**代码质量和可维护性**。 |\n| **GAIA**       | 旨在构建**通用智能体评估框架**，覆盖多模态任务（如文本、图像、代码），测试智能体的**跨领域适应性**和**综合能力**。 |\n\n---\n\n### **2. 评测方式**\n| 项目         | 评测方式                                                                 |\n|--------------|--------------------------------------------------------------------------|\n| **AgentBench** | - 使用**模拟环境**（如游戏、协作任务）评估智能体的协作与竞争策略。<br>- 通过**任务完成率**、**资源分配效率**等指标量化表现。 |\n| **SWE-bench**  | - 基于**代码生成/修复任务**的自动化测试框架（如单元测试、代码覆盖率）。<br>- 通过**语法正确性**、**功能正确性**和**代码复杂度**等指标评估。 |\n| **GAIA**       | - 采用**多任务基准测试集**（如文本生成、代码生成、视觉任务）。<br>- 通过**与人类表现对比**、**跨任务泛化能力**等指标综合评估。 |\n\n---\n\n### **3. 主要局限性**\n| 项目         | 局限性                                                                 |\n|--------------|------------------------------------------------------------------------|\n| **AgentBench** | - 依赖**人工设计的模拟环境**，难以覆盖真实世界的复杂交互场景。<br>- 缺乏对**长期协作**和**动态环境适应性**的评估。 |\n| **SWE-bench**  | - 代码生成任务的**多样性不足**，难以覆盖所有软件工程场景（如大型系统重构）。<br>- 依赖**预定义测试用例**，可能忽略实际开发中的模糊需求。 |\n| **GAIA**       | - **评估标准不统一**，不同任务的指标权重难以平衡。<br>- 对**跨领域泛化能力**的测试存在**数据偏差**（如依赖特定数据集）。 |\n\n---\n\n### **总结**\n- **AgentBench** 更适合研究多智能体的交互行为，但场景封闭性较强；  \n- **SWE-bench** 是软件工程领域的重要工具，但受限于任务定义的边界；  \n- **GAIA** 具有广泛适用性，但评估框架的通用性仍需优化。  \n\n选择框架时需结合具体研究目标（如领域、任务类型）和资源条件。",
+      "agent_answer": "## 技术分析报告\n\n### 问题分析\n用户要求比较AgentBench、SWE-bench和GAIA三个系统的测试目标、评测方式及主要局限性。根据提供的工具观测结果，所有尝试获取的搜索请求均因超时未返回有效证据，且参考来源索引明确标注\"无可用 Evidence\"。来源验证结果显示证据覆盖率为0%，且存在5条警告，表明当前证据库无法支持完整比较。\n\n### 结论\n由于缺乏有效证据（Evidence），无法完成对AgentBench、SWE-bench和GAIA三个系统的对比分析。具体表现为：\n1. 未获取到任何关于三个系统的测试目标描述\n2. 未发现评测方式的相关说明\n3. 缺失主要局限性的具体分析\n4. 所有搜索请求均失败，无法通过官方文档获取补充信息\n\n当前证据不足，无法进行有效比较分析。建议补充官方技术文档或权威评测报告作为 Evidence 后重新评估。\n\n## 参考来源\n- 无可用 Evidence",
+      "baseline_status": "success",
+      "agent_status": "success",
+      "baseline_latency": 94.65895540000929,
+      "agent_latency": 101.62931100001151,
+      "observations": [
+        {
+          "step": 1,
+          "action": "SEARCH",
+          "query": "AgentBench SWE-bench GAIA 测试目标 评测方式 主要局限性",
+          "tool_result": {
+            "success": false,
+            "source": "web",
+            "error": "搜索请求超过 10 秒，已超时。"
+          }
+        },
+        {
+          "step": 2,
+          "action": "SEARCH",
+          "query": "AgentBench SWE-bench GAIA 测试目标 评测方式 主要局限性 官方文档",
+          "tool_result": {
+            "success": false,
+            "source": "web",
+            "error": "搜索请求超过 10 秒，已超时。"
+          }
+        },
+        {
+          "step": 3,
+          "action": "SEARCH",
+          "query": "AgentBench SWE-bench GAIA 测试目标 评测方式 主要局限性 官方文档 官方文档",
+          "tool_result": {
+            "success": false,
+            "source": "web",
+            "error": "搜索请求超过 10 秒，已超时。"
+          }
+        },
+        {
+          "step": 4,
+          "action": "SEARCH",
+          "query": "AgentBench SWE-bench GAIA 测试目标 评测方式 主要局限性 官方文档 官方文档 官方文档",
+          "tool_result": {
+            "success": false,
+            "source": "web",
+            "error": "搜索请求超过 10 秒，已超时。"
+          }
+        }
+      ],
+      "verification": {
+        "success": false,
+        "verified_evidence": [],
+        "warnings": [
+          "忽略失败或不支持的 observation（step 1）：工具执行失败。",
+          "忽略失败或不支持的 observation（step 2）：工具执行失败。",
+          "忽略失败或不支持的 observation（step 3）：工具执行失败。",
+          "忽略失败或不支持的 observation（step 4）：工具执行失败。",
+          "Evidence 未覆盖全部比较对象，当前证据不足以完成完整比较。"
+        ],
+        "coverage": {
+          "covered_terms": [],
+          "missing_terms": [
+            "AgentBench",
+            "SWE-bench",
+            "GAIA"
+          ],
+          "coverage_ratio": 0.0,
+          "warnings": [
+            "Evidence 未覆盖全部比较对象，当前证据不足以完成完整比较。"
+          ]
+        },
+        "summary": "检查完成：0 条成功 Evidence，5 条 warning。"
+      },
+      "metrics": {
+        "baseline": {
+          "task_completion": 1.0,
+          "evidence_coverage": null,
+          "citation_traceability": null,
+          "evidence_sufficiency": null,
+          "latency": 94.65895540000929
+        },
+        "agent": {
+          "task_completion": 1.0,
+          "evidence_coverage": 0.0,
+          "citation_traceability": 0.0,
+          "evidence_sufficiency": 1.0,
+          "latency": 101.62931100001151
+        }
+      },
+      "baseline_error": null,
+      "agent_error": "web: 搜索请求超过 10 秒，已超时。; web: 搜索请求超过 10 秒，已超时。; web: 搜索请求超过 10 秒，已超时。; web: 搜索请求超过 10 秒，已超时。",
+      "agent_events": [
+        {
+          "step": 1,
+          "stage": "router",
+          "action": "ROUTER",
+          "query": "",
+          "status": "running",
+          "success": null,
+          "elapsed": 8.670000534038991e-05
+        },
+        {
+          "step": 1,
+          "stage": "router",
+          "action": "ROUTER",
+          "query": "",
+          "status": "completed",
+          "success": true,
+          "elapsed": 5.215731300006155
+        },
+        {
+          "step": 1,
+          "action": "SEARCH",
+          "query": "AgentBench SWE-bench GAIA 测试目标 评测方式 主要局限性",
+          "status": "running",
+          "success": null,
+          "elapsed": 5.215987599993241
+        },
+        {
+          "step": 1,
+          "stage": "tool",
+          "action": "SEARCH",
+          "query": "AgentBench SWE-bench GAIA 测试目标 评测方式 主要局限性",
+          "status": "running",
+          "success": null,
+          "elapsed": 5.2159951999929035
+        },
+        {
+          "step": 1,
+          "stage": "tool",
+          "action": "SEARCH",
+          "query": "AgentBench SWE-bench GAIA 测试目标 评测方式 主要局限性",
+          "status": "completed",
+          "success": false,
+          "error": "搜索请求超过 10 秒，已超时。",
+          "elapsed": 15.218725800004904
+        },
+        {
+          "step": 2,
+          "stage": "router",
+          "action": "ROUTER",
+          "query": "",
+          "status": "running",
+          "success": null,
+          "elapsed": 15.21876400000474
+        },
+        {
+          "step": 2,
+          "stage": "router",
+          "action": "ROUTER",
+          "query": "",
+          "status": "completed",
+          "success": true,
+          "elapsed": 16.27532919999794
+        },
+        {
+          "step": 2,
+          "action": "SEARCH",
+          "query": "AgentBench SWE-bench GAIA 测试目标 评测方式 主要局限性",
+          "status": "running",
+          "success": null,
+          "elapsed": 16.27545359999931
+        },
+        {
+          "step": 2,
+          "stage": "tool",
+          "action": "SEARCH",
+          "query": "AgentBench SWE-bench GAIA 测试目标 评测方式 主要局限性 官方文档",
+          "status": "running",
+          "success": null,
+          "elapsed": 16.275467400002526
+        },
+        {
+          "step": 2,
+          "stage": "tool",
+          "action": "SEARCH",
+          "query": "AgentBench SWE-bench GAIA 测试目标 评测方式 主要局限性 官方文档",
+          "status": "completed",
+          "success": false,
+          "error": "搜索请求超过 10 秒，已超时。",
+          "elapsed": 26.290295700004208
+        },
+        {
+          "step": 3,
+          "stage": "router",
+          "action": "ROUTER",
+          "query": "",
+          "status": "running",
+          "success": null,
+          "elapsed": 26.290327499998966
+        },
+        {
+          "step": 3,
+          "stage": "router",
+          "action": "ROUTER",
+          "query": "",
+          "status": "completed",
+          "success": true,
+          "elapsed": 27.40561760000128
+        },
+        {
+          "step": 3,
+          "action": "SEARCH",
+          "query": "AgentBench SWE-bench GAIA 测试目标 评测方式 主要局限性 官方文档",
+          "status": "running",
+          "success": null,
+          "elapsed": 27.405739199995878
+        },
+        {
+          "step": 3,
+          "stage": "tool",
+          "action": "SEARCH",
+          "query": "AgentBench SWE-bench GAIA 测试目标 评测方式 主要局限性 官方文档 官方文档",
+          "status": "running",
+          "success": null,
+          "elapsed": 27.405753600003663
+        },
+        {
+          "step": 3,
+          "stage": "tool",
+          "action": "SEARCH",
+          "query": "AgentBench SWE-bench GAIA 测试目标 评测方式 主要局限性 官方文档 官方文档",
+          "status": "completed",
+          "success": false,
+          "error": "搜索请求超过 10 秒，已超时。",
+          "elapsed": 37.413403099999414
+        },
+        {
+          "step": 4,
+          "stage": "router",
+          "action": "ROUTER",
+          "query": "",
+          "status": "running",
+          "success": null,
+          "elapsed": 37.41343149999739
+        },
+        {
+          "step": 4,
+          "stage": "router",
+          "action": "ROUTER",
+          "query": "",
+          "status": "completed",
+          "success": true,
+          "elapsed": 38.5967246999935
+        },
+        {
+          "step": 4,
+          "action": "SEARCH",
+          "query": "AgentBench SWE-bench GAIA 测试目标 评测方式 主要局限性 官方文档 官方文档",
+          "status": "running",
+          "success": null,
+          "elapsed": 38.59684990000096
+        },
+        {
+          "step": 4,
+          "stage": "tool",
+          "action": "SEARCH",
+          "query": "AgentBench SWE-bench GAIA 测试目标 评测方式 主要局限性 官方文档 官方文档 官方文档",
+          "status": "running",
+          "success": null,
+          "elapsed": 38.59686609999335
+        },
+        {
+          "step": 4,
+          "stage": "tool",
+          "action": "SEARCH",
+          "query": "AgentBench SWE-bench GAIA 测试目标 评测方式 主要局限性 官方文档 官方文档 官方文档",
+          "status": "completed",
+          "success": false,
+          "error": "搜索请求超过 10 秒，已超时。",
+          "elapsed": 48.60683760000393
+        },
+        {
+          "step": 4,
+          "stage": "final",
+          "action": "FINAL",
+          "query": "",
+          "status": "running",
+          "success": null,
+          "elapsed": 48.60703569999896
+        },
+        {
+          "step": 4,
+          "stage": "final",
+          "action": "FINAL",
+          "query": "",
+          "status": "completed",
+          "success": true,
+          "elapsed": 99.86304640000162
+        }
+      ],
+      "agent_last_event": {
+        "step": 4,
+        "stage": "final",
+        "action": "FINAL",
+        "query": "",
+        "status": "completed",
+        "success": true,
+        "elapsed": 99.86304640000162
+      }
+    },
+    {
+      "case_id": "T3",
+      "category": "local_rag",
+      "question": "根据我的本地 X-ray 项目资料，分析 DenseFieldNet 的核心方法。",
+      "baseline_answer": "根据您提供的本地 X-ray 项目资料，以下是对 **DenseFieldNet** 核心方法的分析（基于常见技术框架和可能的实现逻辑）：\n\n---\n\n### 1. **核心架构设计**\n   - **密集连接（Dense Block）**  \n     DenseFieldNet 可能借鉴了 **DenseNet** 的密集连接机制，即每个卷积层直接连接到后续所有层，形成 **特征重用** 和 **信息流动**。这种设计有助于缓解梯度消失问题，并增强特征表达能力。\n   - **多尺度特征提取**  \n     通过堆叠多个卷积块（Conv Block），模型可能提取不同尺度的特征。例如：\n     - **低层特征**：捕捉边缘、纹理等细节（如 X-ray 中的骨密度变化）。\n     - **高层特征**：捕获更抽象的语义信息（如肺部区域或骨折区域）。\n\n---\n\n### 2. **输入处理与特征编码**\n   - **X-ray 图像预处理**  \n     输入可能经过归一化（如将像素值缩放到 [0,1]）、去噪（如使用中值滤波）或对比度增强（如直方图均衡化）。\n   - **特征编码器**  \n     使用 CNN 编码器（如 ResNet、VGG 或自定义结构）提取特征。例如：\n     - **卷积层**：逐步缩小特征图尺寸，提取局部特征。\n     - **池化层**：降低空间维度，保留关键信息。\n     - **跳跃连接**：保留原始输入信息（如编码器-解码器结构中的跳跃连接）。\n\n---\n\n### 3. **上下文建模与密集特征融合**\n   - **密集特征图生成**  \n     通过密集连接机制，模型可能生成 **密集特征图**（Dense Feature Map），其中每个位置包含多尺度特征的组合。这有助于捕捉 X-ray 图像中复杂的局部-全局关系（如骨折区域与周围组织的交互）。\n   - **上下文建模**  \n     可能引入 **注意力机制**（如自注意力或跨层注意力）或 **全局平均池化**（Global Average Pooling, GAP）来建模长距离依赖关系，增强对病灶区域的识别能力。\n\n---\n\n### 4. **任务特定设计**\n   - **分割任务**  \n     如果用于 X-ray 分割（如肺部区域分割），可能采用 **编码器-解码器结构**，结合 **转置卷积**（Upsampling）和 **跳跃连接** 以恢复空间信息。\n   - **检测任务**  \n     若用于病灶检测，可能使用 **Region Proposal Network (RPN)** 或 **YOLO/RetinaNet** 类框架，结合 DenseNet 的特征提取能力。\n\n---\n\n### 5. **损失函数与训练策略**\n   - **分割任务**：  \n     - **Dice Loss** 或 **Focal Loss** 用于处理类别不平衡（如 X-ray 中背景与病灶的样本比例差异）。  \n     - **交叉熵损失**（Binary Cross-Entropy, BCE）用于二分类分割。\n   - **检测任务**：  \n     - **联合损失**：结合分类损失（如交叉熵）和定位损失（如 Smooth L1 Loss）。\n   - **训练策略**：  \n     - **数据增强**：旋转、翻转、对比度调整等，模拟不同 X-ray 视角。  \n     - **迁移学习**：使用预训练模型（如 ImageNet）的权重进行初始化。\n\n---\n\n### 6. **潜在创新点（推测）**\n   - **X-ray 特定优化**：  \n     - 针对 X-ray 图像的低对比度和噪声，可能引入 **多尺度滤波器** 或 **自适应对比度增强模块**。\n     - 在密集连接中加入 **物理模型约束**（如 X-ray 传播方程的简化形式）。\n   - **高效性改进**：  \n     - 使用 **轻量级卷积**（如 Depthwise Separable Convolution）减少计算量。  \n     - 通过 **知识蒸馏** 或 **模型剪枝** 优化推理速度。\n\n---\n\n### 7. **局限性与挑战**\n   - **数据稀缺性**：X-ray 数据集通常较小，可能需要依赖数据增强或合成数据。\n   - **模型泛化能力**：不同 X-ray 设备（如不同分辨率、成像参数）可能导致模型性能波动。\n   - **计算资源**：密集连接结构可能增加内存占用，需权衡模型复杂度与部署需求。\n\n---\n\n### 总结\nDenseFieldNet 的核心方法可能围绕 **密集连接 + 多尺度特征提取 + 上下文建模**，结合 X-ray 图像的特殊性（如低对比度、噪声）进行优化。具体实现需参考您的项目代码或文档，但上述分析可作为通用技术框架的参考。如果需要更精确的分析，请提供模型架构图、代码片段或训练细节。",
+      "agent_answer": "## DenseFieldNet 核心方法分析\n\nDenseFieldNet 的核心技术围绕密集回归架构设计，通过以下机制实现亚像素级精度的物理信息提取：\n\n1. **编码器与特征提取**  \n   网络采用深层卷积堆叠结构作为编码器，利用残差感知机制捕捉光斑边缘的微弱梯度变化。多层卷积核滑动扫描可检测折射引起的\"红绿月牙\"式特征偏移 [Evidence 1]。\n\n2. **解码器与密集场对齐**  \n   引入自适应全局池化层，将输出强制映射至 8x8 矩阵。每个输出单元对应物理空间中的特定光斑，通过\"物理-神经网络\"一一对应设计，降低参数冗余并提升解释性 [Evidence 1]。\n\n3. **张量维度控制**  \n   输入尺寸为 512x512 的单通道图像时，初始张量形状为 [Batch_Size, 1, 512, 512]。通过浅层特征提取和深层维度压缩，实现对感受野的精确控制 [Evidence 1]。\n\n4. **误差分析与鲁棒性**  \n   - 边界效应：卷积核填充操作导致边缘信息丢失，建议采用反射填充或空间注意力机制改进 [Evidence 1]。\n   - 噪声干扰：当背景噪声强度 σ_noise 超过 0.03 时，模型精度退化约 15% [Evidence 1]。\n\n5. **验证性能指标**  \n   在 ±5 像素动态量程内取得显著精度突破：MAE 0.072 像素，RMSE 0.085 像素，峰值误差控制在 0.15 像素内 [Evidence 1]。\n\n## 参考来源\n- [Evidence 1] Local RAG：本地知识库（注：证据覆盖不完整，缺少 X-ray 相关内容）",
+      "baseline_status": "success",
+      "agent_status": "success",
+      "baseline_latency": 149.0987804000033,
+      "agent_latency": 104.69747060000373,
+      "observations": [
+        {
+          "step": 1,
+          "action": "RAG",
+          "query": "DenseFieldNet核心技术",
+          "tool_result": {
+            "success": true,
+            "source": "local_rag",
+            "content": "【本地知识片段】\nNet) 架构设计  \n针对本课题对亚像素精度的严苛要求，本方案自主设计了  DenseFieldNet 密集回归架\n构。该网络并非简单的图像分类器，而是具备空间感知能力的物理信息提取器。  \n1. 编码器与特征提取逻辑  \n网络前端采用深层卷积堆叠结构作为编码器， 利用残差感知机制提取光斑边缘的微弱梯\n度变化。通过多层卷积核的滑动扫描，模型能够敏感地捕捉到由于折射引起的“红绿月牙”\n式特征偏移。  \n2. 解码器与密集场对齐层  \n\n \n 在解码阶段，网络引入了自适应全局池化层，将其强制映射至 8 x8的输出矩阵。每一组\n输出对应于物理空间中的一个特定光斑。这种“物理 -神经网络”一一对应的设计方案，显\n著降低了传统全连接层带来的参数冗余，提高了模型的解释性[8]。 \n3. 张量维度演变与感受野分析  \nDenseFieldNet 的有效性不仅建立在宏观架构上，更体现在其精确的张量维度控制中。  \n当一张尺寸为 512x512的单通道灰度图像输入网络时，其初始张量形状为 [Batch_Size,\n 1,512,512] 。 \n(1) 浅层特征提取： 数据首先经过  kernel_si\n\n【本地知识片段】\n高度的拓扑一致性，\n成功捕捉到了场中心的高梯度区域。  \n(2) 矢量场对齐 ： 通过叠加预测矢量与物理真值， 我们发现模型在边缘复杂噪声干扰下，\n依然保持了良好的矢量方向敏感度。  \n \n  \n图5 基于 DenseFieldNet 的模拟验证样本位移场反演结果 ，分别展示了模拟 位移场真值 （左）、DenseFi\neldNet 模型预测热力图 （中）以及两者间的亚像素残差分布图 （右） \n（四）误差来源分析与鲁棒性讨论  \n尽管 DenseFieldNet 表现出极高的精度，但在讨论中仍需关注其在极端条件下的局限\n性。 \n1. 边界效应  (Edge Effects) 与离散化误差  \n\n \n 通过对残差分布图的深度分析，我们发现误差峰值主要集中在画布的最边缘区域。这是\n由于卷积核在图像边缘的填充操作导致了部分感受野信息的丢失。 未来的改进方向可考虑采\n用反射填充或引入空间注意力机制来增强边界特征的权重。  \n2. 散粒噪声对亚像素反演的干扰上限  \n当背景噪声强度σ _{noise} 超过0.03时，模型精度会出现约 15%的退化。这说明模型\n在提取“物理梯度”时，仍受限于光学探\n\n【本地知识片段】\n \n通过对 1000 组独立测试样本的预测结果进行统计，本算法在± 5像素的动态量程内，\n取得了显著的精度突破：  \n• 平均绝对误差  (MAE)：0.072像素。 \n• 均方根误差  (RMSE)：0.085像素。 \n• 峰值误差  (Peak Error) ：严格控制在 0.15像素以内。  \n\n \n 这一数据证明， DenseFieldNet 能够捕捉到光斑边缘极微弱的亮度梯度变化（即“红绿\n月牙”特征），其精度已完全覆盖并超越了传统的一阶解析算法，满足了  X 射线折射成像\n对微米级偏移的监测需求。  \n（三）验证样本的闭环审计  \n针对指导教师提供的 模拟校验样本（见图  3.2），本研究进行了针对性的泛化性测试。  \n1. 真实位移场反演表现  \n指导教师提供的样本涵盖了复杂的局部相位梯度变化。如图  3.2 所示，DenseFieldNe\nt 在处理该样本时，能够精准还原出光斑阵列的非线性偏移趋势。  \n(1) 热力图吻合度 ： 预测产生的位移标量热力图与真值物理场呈现出高度的拓扑一致性，\n成功捕捉到了场中心的高梯度区域。  \n(2) 矢量场对齐 ： 通过叠加预测矢量与",
+            "metadata": {
+              "top_k": 3,
+              "result_count": 3
+            }
+          }
+        }
+      ],
+      "verification": {
+        "success": true,
+        "verified_evidence": [
+          {
+            "evidence_id": 1,
+            "source": "local_rag",
+            "source_type": "local_document",
+            "source_quality": "high",
+            "step": 1,
+            "action": "RAG",
+            "query": "DenseFieldNet核心技术",
+            "content": "【本地知识片段】\nNet) 架构设计  \n针对本课题对亚像素精度的严苛要求，本方案自主设计了  DenseFieldNet 密集回归架\n构。该网络并非简单的图像分类器，而是具备空间感知能力的物理信息提取器。  \n1. 编码器与特征提取逻辑  \n网络前端采用深层卷积堆叠结构作为编码器， 利用残差感知机制提取光斑边缘的微弱梯\n度变化。通过多层卷积核的滑动扫描，模型能够敏感地捕捉到由于折射引起的“红绿月牙”\n式特征偏移。  \n2. 解码器与密集场对齐层  \n\n \n 在解码阶段，网络引入了自适应全局池化层，将其强制映射至 8 x8的输出矩阵。每一组\n输出对应于物理空间中的一个特定光斑。这种“物理 -神经网络”一一对应的设计方案，显\n著降低了传统全连接层带来的参数冗余，提高了模型的解释性[8]。 \n3. 张量维度演变与感受野分析  \nDenseFieldNet 的有效性不仅建立在宏观架构上，更体现在其精确的张量维度控制中。  \n当一张尺寸为 512x512的单通道灰度图像输入网络时，其初始张量形状为 [Batch_Size,\n 1,512,512] 。 \n(1) 浅层特征提取： 数据首先经过  kernel_si\n\n【本地知识片段】\n高度的拓扑一致性，\n成功捕捉到了场中心的高梯度区域。  \n(2) 矢量场对齐 ： 通过叠加预测矢量与物理真值， 我们发现模型在边缘复杂噪声干扰下，\n依然保持了良好的矢量方向敏感度。  \n \n  \n图5 基于 DenseFieldNet 的模拟验证样本位移场反演结果 ，分别展示了模拟 位移场真值 （左）、DenseFi\neldNet 模型预测热力图 （中）以及两者间的亚像素残差分布图 （右） \n（四）误差来源分析与鲁棒性讨论  \n尽管 DenseFieldNet 表现出极高的精度，但在讨论中仍需关注其在极端条件下的局限\n性。 \n1. 边界效应  (Edge Effects) 与离散化误差  \n\n \n 通过对残差分布图的深度分析，我们发现误差峰值主要集中在画布的最边缘区域。这是\n由于卷积核在图像边缘的填充操作导致了部分感受野信息的丢失。 未来的改进方向可考虑采\n用反射填充或引入空间注意力机制来增强边界特征的权重。  \n2. 散粒噪声对亚像素反演的干扰上限  \n当背景噪声强度σ _{noise} 超过0.03时，模型精度会出现约 15%的退化。这说明模型\n在提取“物理梯度”时，仍受限于光学探\n\n【本地知识片段】\n \n通过对 1000 组独立测试样本的预测结果进行统计，本算法在± 5像素的动态量程内，\n取得了显著的精度突破：  \n• 平均绝对误差  (MAE)：0.072像素。 \n• 均方根误差  (RMSE)：0.085像素。 \n• 峰值误差  (Peak Error) ：严格控制在 0.15像素以内。  \n\n \n 这一数据证明， DenseFieldNet 能够捕捉到光斑边缘极微弱的亮度梯度变化（即“红绿\n月牙”特征），其精度已完全覆盖并超越了传统的一阶解析算法，满足了  X 射线折射成像\n对微米级偏移的监测需求。  \n（三）验证样本的闭环审计  \n针对指导教师提供的 模拟校验样本（见图  3.2），本研究进行了针对性的泛化性测试。  \n1. 真实位移场反演表现  \n指导教师提供的样本涵盖了复杂的局部相位梯度变化。如图  3.2 所示，DenseFieldNe\nt 在处理该样本时，能够精准还原出光斑阵列的非线性偏移趋势。  \n(1) 热力图吻合度 ： 预测产生的位移标量热力图与真值物理场呈现出高度的拓扑一致性，\n成功捕捉到了场中心的高梯度区域。  \n(2) 矢量场对齐 ： 通过叠加预测矢量与",
+            "metadata": {
+              "top_k": 3,
+              "result_count": 3
+            },
+            "urls": []
+          }
+        ],
+        "warnings": [],
+        "coverage": {
+          "covered_terms": [
+            "DenseFieldNet"
+          ],
+          "missing_terms": [
+            "X-ray"
+          ],
+          "coverage_ratio": 0.5,
+          "warnings": []
+        },
+        "summary": "检查完成：1 条成功 Evidence，0 条 warning。"
+      },
+      "metrics": {
+        "baseline": {
+          "task_completion": 1.0,
+          "evidence_coverage": null,
+          "citation_traceability": null,
+          "evidence_sufficiency": null,
+          "latency": 149.0987804000033
+        },
+        "agent": {
+          "task_completion": 1.0,
+          "evidence_coverage": 0.5,
+          "citation_traceability": 1.0,
+          "evidence_sufficiency": 0.0,
+          "latency": 104.69747060000373
+        }
+      },
+      "baseline_error": null,
+      "agent_error": null,
+      "agent_events": [
+        {
+          "step": 1,
+          "stage": "router",
+          "action": "ROUTER",
+          "query": "",
+          "status": "running",
+          "success": null,
+          "elapsed": 8.379999781027436e-05
+        },
+        {
+          "step": 1,
+          "stage": "router",
+          "action": "ROUTER",
+          "query": "",
+          "status": "completed",
+          "success": true,
+          "elapsed": 5.011543400003575
+        },
+        {
+          "step": 1,
+          "action": "RAG",
+          "query": "DenseFieldNet核心技术",
+          "status": "running",
+          "success": null,
+          "elapsed": 5.0117907999956515
+        },
+        {
+          "step": 1,
+          "stage": "tool",
+          "action": "RAG",
+          "query": "DenseFieldNet核心技术",
+          "status": "running",
+          "success": null,
+          "elapsed": 5.01179800000682
+        },
+        {
+          "step": 1,
+          "stage": "tool",
+          "action": "RAG",
+          "query": "DenseFieldNet核心技术",
+          "status": "completed",
+          "success": true,
+          "error": null,
+          "elapsed": 6.14564970000356
+        },
+        {
+          "step": 2,
+          "stage": "router",
+          "action": "ROUTER",
+          "query": "",
+          "status": "running",
+          "success": null,
+          "elapsed": 6.145672400001786
+        },
+        {
+          "step": 2,
+          "stage": "router",
+          "action": "ROUTER",
+          "query": "",
+          "status": "completed",
+          "success": true,
+          "elapsed": 7.328385100001469
+        },
+        {
+          "step": 2,
+          "action": "FINAL",
+          "query": "",
+          "status": "running",
+          "success": null,
+          "elapsed": 7.328542900009779
+        },
+        {
+          "step": 2,
+          "stage": "final",
+          "action": "FINAL",
+          "query": "",
+          "status": "running",
+          "success": null,
+          "elapsed": 7.328584200004116
+        },
+        {
+          "step": 2,
+          "stage": "final",
+          "action": "FINAL",
+          "query": "",
+          "status": "completed",
+          "success": true,
+          "elapsed": 102.79983889999858
+        }
+      ],
+      "agent_last_event": {
+        "step": 2,
+        "stage": "final",
+        "action": "FINAL",
+        "query": "",
+        "status": "completed",
+        "success": true,
+        "elapsed": 102.79983889999858
+      }
+    },
+    {
+      "case_id": "T4",
+      "category": "web_research",
+      "question": "搜索 MCP（Model Context Protocol）的官方资料，并说明其核心架构。",
+      "baseline_answer": "截至目前（2023年10月），**MCP（Model Context Protocol）** 并不是一个广为人知的公开标准协议，也没有明确的官方资料或权威文档明确定义其核心架构。以下是一些可能的解释和方向：\n\n---\n\n### 1. **可能的误解或拼写错误**\n   - **MCP** 可能是某个特定项目、公司或框架内部的专有协议（例如：模型上下文管理协议），但未公开。\n   - 也可能是其他缩写（如 **Microsoft Certification Program**、**Multi-Context Protocol** 等），需结合具体场景确认。\n\n---\n\n### 2. **相关概念的推测**\n   如果您指的是与 **机器学习模型上下文** 相关的协议，可能涉及以下技术方向：\n   - **模型服务协议**：如在分布式系统中传递模型元数据、输入输出上下文（例如：TensorFlow Serving、ONNX Runtime 的通信机制）。\n   - **模型交换格式**：如 ONNX、PMML 等，用于定义模型结构和上下文信息，但并非通信协议。\n   - **API 接口规范**：某些平台（如 AWS SageMaker、Google AI Platform）可能定义了模型服务的上下文传递方式，但通常以 API 文档形式存在。\n\n---\n\n### 3. **核心架构的通用假设（若存在）**\n   如果 MCP 是一种假设性的协议，其核心架构可能包含以下要素：\n   - **上下文描述**：定义模型的输入、输出、参数、依赖项等元数据。\n   - **通信机制**：通过 REST/gRPC/消息队列等协议传递上下文信息。\n   - **版本控制**：确保不同版本的模型上下文兼容性。\n   - **安全机制**：如 TLS 加密、身份验证，用于保护模型数据传输。\n\n---\n\n### 4. **建议**\n   - 若 MCP 是某个具体项目或公司的内部协议，请提供更多上下文（如公司名称、技术栈、文档片段等）。\n   - 检查是否有拼写错误或术语混淆（例如：**MCC**、**MCP**、**Model Contextualization Protocol** 等）。\n   - 参考开源项目（如 GitHub）或行业白皮书，搜索相关关键词。\n\n---\n\n如您有更多背景信息，可以进一步补充，我将尝试提供更精确的解答。",
+      "agent_answer": "",
+      "baseline_status": "success",
+      "agent_status": "timeout",
+      "baseline_latency": 90.15834949999407,
+      "agent_latency": 177.78993739999714,
+      "observations": [
+        {
+          "step": 1,
+          "action": "SEARCH",
+          "query": "MCP 官方资料",
+          "tool_result": {
+            "success": false,
+            "source": "web",
+            "error": "搜索请求超过 10 秒，已超时。"
+          }
+        },
+        {
+          "step": 2,
+          "action": "SEARCH",
+          "query": "MCP 核心架构",
+          "tool_result": {
+            "success": true,
+            "source": "web",
+            "content": "【标题】: 2.1 MCP架构深度解析 | 模型上下文协议——MCP\n【URL】: https://mcp.meetcoding.cn/02-core-concepts/architecture-overview.html\n【摘要】: Nov 21, 2025 · 层次职责： 🔝 应用层：提供用户界面和AI模型 📡 协议层：处理MCP通信和消息路由 ⚙️ 服务层：实现具体的工具和功能 💾 资源层：提供底层数据和服务 🎪 MCP的核心架构模式 📋 客户端-服务器模式 MCP采用经典的客户端-服务器架构，但有其独特之处：\n\n【标题】: 核心架构 - MCP 官方文档中文版\n【URL】: https://mcp-docs.apifox.cn/6175155m0\n【摘要】: 核心架构 了解 MCP 如何连接客户端、服务器和 LLM 模型上下文协议 (MCP) 构建在灵活、可扩展的架构之上，能够实现 LLM 应用程序和集成之间的无缝通信。 本文档涵盖了核心架构组件和概念。 概述 # MCP 遵循客户端-服务器架构，其中：\n\n【标题】: 核心架构 – MCP 中文站（Model Context Protocol 中文）\n【URL】: https://mcpcn.com/docs/concepts/architecture/\n【摘要】: 模型上下文协议 (MCP)建立在灵活、可扩展的架构之上,可以实现 LLM 应用程序和集成之间的无缝通信。 本文档介绍核心架构组件和概念。 ... MCP 遵循客户端-服务器架构,其中: 宿主 是启动连接的 LLM 应用程序 (如 Claude Desktop 或 IDE)",
+            "metadata": {
+              "result_count": 3
+            }
+          }
+        },
+        {
+          "step": 3,
+          "action": "WEB_READ",
+          "query": "https://mcp-docs.apifox.cn/6175155m0",
+          "tool_result": {
+            "success": true,
+            "source": "web_reader",
+            "content": "核心架构 - MCP 官方文档中文版 复制页面 MCP 官方文档中文版 开始使用 简介 示例 Servers 示例 Clients 快速上手 服务器开发 客户端开发 Claude 桌面版开发 教程 使用 LLMs 构建 MCP 调试 Debugging 调试器 Inspector 概念 核心架构 资源 Resources 提示词 Prompts 工具 Tools 采样 Sampling 根 Roots 传输 Transports 开发 新计划 规划 贡献 复制页面 核心架构 了解 MCP 如何连接客户端、服务器和 LLM 模型上下文协议 (MCP) 构建在灵活、可扩展的架构之上，能够实现 LLM 应用程序和集成之间的无缝通信。本文档涵盖了核心架构组件和概念。 概述 # MCP 遵循客户端-服务器架构，其中： 宿主（Hosts） 是启动连接的 LLM 应用程序（如 Claude Desktop 或 IDE） 客户端（Clients） 在宿主应用程序内与服务器保持 1:1 连接 服务器（Servers） 向客户端提供上下文、工具和提示 核心组件 # 协议层（Protocol Layer） # 协议层处理消息组帧、请求/响应链接以及高级通信模式。 TypeScript Python 关键类包括： Protocol Client Server 传输层（Transport Layer） # 传输层处理客户端和服务器之间的实际通信。 MCP 支持多种传输机制： 1 . 标准输入/输出传输（Stdio Transport） 使用标准输入/输出进行通信 适用于本地进程 2 . HTTP with SSE 传输 使用服务器发送事件（Server-Sent Events，SSE）进行服务器到客户端的消息传递 使用 HTTP POST 进行客户端到服务器的消息传递 所有传输都使用 JSON-RPC 2.0 交换消息。 有关模型上下文协议消息格式的详细信息，请参见 规范 。 消息类型（Message Types） # MCP 具有以下主要消息类型： 1 . 请求（Requests） 期望另一方做出响应： 2 . 结果（Results） 是对请求的成功响应： 3 . 错误（Errors） 表示请求失败： 4 . 通知（Notifications） 是不需要响应的单向消息： 连接生命周期（Connection Lifecycle） # 1. 初始化（Initialization） # 1 . 客户端发送带有协议版本和功能的 initialize 请求 2 . 服务器响应其协议版本和功能 3 . 客户端发送 initialized 通知作为确认 4 . 正常的 message exchange (消息交换) 开始 2. 消息交换（Message Exchange） # 初始化后，支持以下模式： 请求-响应（Request-Response） ：客户端或服务器发送请求，另一方响应 通知（Notifications） ：任一方发送单向消息 3. 终止（Termination） # 任一方都可以终止连接： 通过 close() 清理关闭 传输断开连接 错误情况 错误处理（Error Handling） # MCP 定义了以下标准错误代码： SDK 和应用程序可以在 -32000 以上定义自己的错误代码。 错误通过以下方式传播： 对请求的错误响应 传输上的错误事件 协议级别的错误处理程序 实现示例（Implementation Example） # 这是一个实现 MCP 服务器的基本示例： TypeScript Python 最佳实践（Best Practices） # 传输选择（Transport Selection） # 1 . 本地通信（Local Communication） 对于本地进程，使用标准输入/输出传输（stdio transport\u0000\u0000） 对于同机通信，效率高 简单的进程管理 2 . 远程通信（Remote Communication） 对于需要 HTTP 兼容性的场景，使用 SSE 考虑安全影响，包括身份验证和授权 消息处理（Message Handling） # 1 . 请求处理（Request Processing） 彻底验证输入 使用类型安全的模式（schema） 优雅地处理错误 实施超时 2 . 进度报告（Progress Reporting） 对于长时间运行的操作，使用进度令牌（progress tokens） 增量报告进度 在已知总进度时包括总进度 3 . 错误管理（Error Management） 使用适当的错误代码 包括有用的错误消息 在发生错误时清理资源 安全注意事项（Security Considerations） # 1 . 传输安全（Transport Security） 对于远程连接，使用 TLS 验证连接来源 在需要时实施身份验证 2 . 消息验证（Message Validation） 验证所有传入消息 清理输入 检查消息大小限制 验证 JSON-RPC 格式 3 . 资源保护（Resource Protection） 实施访问控制 验证资源路径 监视资源使用情况 限制请求速率 4 . 错误处理（Error Handling） 不要泄露敏感信息 记录与安全相关的错误 实施适当的清理 处理 DoS 场景 调试和监控（Debugging and Monitoring） # 1 . 日志记录（Logging） 记录协议事件 跟踪消息流 监控性能 记录错误 2 . 诊断（Diagnostics） 实施健康检查 监视连接状态 跟踪资源使用情况 分析性能 3 . 测试（Testing） 测试不同的传输 验证错误处理 检查边缘情况 负载测试服务器 修改于 2026-08-10 05:39:06 上一页 调试器 Inspector 下一页 资源 Resources",
+            "metadata": {
+              "url": "https://mcp-docs.apifox.cn/6175155m0",
+              "status_code": 200,
+              "content_length": 2478,
+              "truncated": false
+            }
+          }
+        },
+        {
+          "step": 4,
+          "action": "WEB_READ",
+          "query": "",
+          "tool_result": {
+            "success": false,
+            "source": "web_read",
+            "error": "Action 缺少有效 query。"
+          }
+        }
+      ],
+      "verification": {
+        "success": false,
+        "verified_evidence": [
+          {
+            "evidence_id": 1,
+            "source": "web",
+            "source_type": "search_result",
+            "source_quality": "low",
+            "step": 2,
+            "action": "SEARCH",
+            "query": "MCP 核心架构",
+            "content": "【标题】: 2.1 MCP架构深度解析 | 模型上下文协议——MCP\n【URL】: https://mcp.meetcoding.cn/02-core-concepts/architecture-overview.html\n【摘要】: Nov 21, 2025 · 层次职责： 🔝 应用层：提供用户界面和AI模型 📡 协议层：处理MCP通信和消息路由 ⚙️ 服务层：实现具体的工具和功能 💾 资源层：提供底层数据和服务 🎪 MCP的核心架构模式 📋 客户端-服务器模式 MCP采用经典的客户端-服务器架构，但有其独特之处：\n\n【标题】: 核心架构 - MCP 官方文档中文版\n【URL】: https://mcp-docs.apifox.cn/6175155m0\n【摘要】: 核心架构 了解 MCP 如何连接客户端、服务器和 LLM 模型上下文协议 (MCP) 构建在灵活、可扩展的架构之上，能够实现 LLM 应用程序和集成之间的无缝通信。 本文档涵盖了核心架构组件和概念。 概述 # MCP 遵循客户端-服务器架构，其中：\n\n【标题】: 核心架构 – MCP 中文站（Model Context Protocol 中文）\n【URL】: https://mcpcn.com/docs/concepts/architecture/\n【摘要】: 模型上下文协议 (MCP)建立在灵活、可扩展的架构之上,可以实现 LLM 应用程序和集成之间的无缝通信。 本文档介绍核心架构组件和概念。 ... MCP 遵循客户端-服务器架构,其中: 宿主 是启动连接的 LLM 应用程序 (如 Claude Desktop 或 IDE)",
+            "metadata": {
+              "result_count": 3
+            },
+            "urls": [
+              "https://mcp.meetcoding.cn/02-core-concepts/architecture-overview.html",
+              "https://mcp-docs.apifox.cn/6175155m0",
+              "https://mcpcn.com/docs/concepts/architecture/"
+            ]
+          },
+          {
+            "evidence_id": 2,
+            "source": "web_reader",
+            "source_type": "web_page",
+            "source_quality": "medium",
+            "step": 3,
+            "action": "WEB_READ",
+            "query": "https://mcp-docs.apifox.cn/6175155m0",
+            "content": "核心架构 - MCP 官方文档中文版 复制页面 MCP 官方文档中文版 开始使用 简介 示例 Servers 示例 Clients 快速上手 服务器开发 客户端开发 Claude 桌面版开发 教程 使用 LLMs 构建 MCP 调试 Debugging 调试器 Inspector 概念 核心架构 资源 Resources 提示词 Prompts 工具 Tools 采样 Sampling 根 Roots 传输 Transports 开发 新计划 规划 贡献 复制页面 核心架构 了解 MCP 如何连接客户端、服务器和 LLM 模型上下文协议 (MCP) 构建在灵活、可扩展的架构之上，能够实现 LLM 应用程序和集成之间的无缝通信。本文档涵盖了核心架构组件和概念。 概述 # MCP 遵循客户端-服务器架构，其中： 宿主（Hosts） 是启动连接的 LLM 应用程序（如 Claude Desktop 或 IDE） 客户端（Clients） 在宿主应用程序内与服务器保持 1:1 连接 服务器（Servers） 向客户端提供上下文、工具和提示 核心组件 # 协议层（Protocol Layer） # 协议层处理消息组帧、请求/响应链接以及高级通信模式。 TypeScript Python 关键类包括： Protocol Client Server 传输层（Transport Layer） # 传输层处理客户端和服务器之间的实际通信。 MCP 支持多种传输机制： 1 . 标准输入/输出传输（Stdio Transport） 使用标准输入/输出进行通信 适用于本地进程 2 . HTTP with SSE 传输 使用服务器发送事件（Server-Sent Events，SSE）进行服务器到客户端的消息传递 使用 HTTP POST 进行客户端到服务器的消息传递 所有传输都使用 JSON-RPC 2.0 交换消息。 有关模型上下文协议消息格式的详细信息，请参见 规范 。 消息类型（Message Types） # MCP 具有以下主要消息类型： 1 . 请求（Requests） 期望另一方做出响应： 2 . 结果（Results） 是对请求的成功响应： 3 . 错误（Errors） 表示请求失败： 4 . 通知（Notifications） 是不需要响应的单向消息： 连接生命周期（Connection Lifecycle） # 1. 初始化（Initialization） # 1 . 客户端发送带有协议版本和功能的 initialize 请求 2 . 服务器响应其协议版本和功能 3 . 客户端发送 initialized 通知作为确认 4 . 正常的 message exchange (消息交换) 开始 2. 消息交换（Message Exchange） # 初始化后，支持以下模式： 请求-响应（Request-Response） ：客户端或服务器发送请求，另一方响应 通知（Notifications） ：任一方发送单向消息 3. 终止（Termination） # 任一方都可以终止连接： 通过 close() 清理关闭 传输断开连接 错误情况 错误处理（Error Handling） # MCP 定义了以下标准错误代码： SDK 和应用程序可以在 -32000 以上定义自己的错误代码。 错误通过以下方式传播： 对请求的错误响应 传输上的错误事件 协议级别的错误处理程序 实现示例（Implementation Example） # 这是一个实现 MCP 服务器的基本示例： TypeScript Python 最佳实践（Best Practices） # 传输选择（Transport Selection） # 1 . 本地通信（Local Communication） 对于本地进程，使用标准输入/输出传输（stdio transport\u0000\u0000） 对于同机通信，效率高 简单的进程管理 2 . 远程通信（Remote Communication） 对于需要 HTTP 兼容性的场景，使用 SSE 考虑安全影响，包括身份验证和授权 消息处理（Message Handling） # 1 . 请求处理（Request Processing） 彻底验证输入 使用类型安全的模式（schema） 优雅地处理错误 实施超时 2 . 进度报告（Progress Reporting） 对于长时间运行的操作，使用进度令牌（progress tokens） 增量报告进度 在已知总进度时包括总进度 3 . 错误管理（Error Management） 使用适当的错误代码 包括有用的错误消息 在发生错误时清理资源 安全注意事项（Security Considerations） # 1 . 传输安全（Transport Security） 对于远程连接，使用 TLS 验证连接来源 在需要时实施身份验证 2 . 消息验证（Message Validation） 验证所有传入消息 清理输入 检查消息大小限制 验证 JSON-RPC 格式 3 . 资源保护（Resource Protection） 实施访问控制 验证资源路径 监视资源使用情况 限制请求速率 4 . 错误处理（Error Handling） 不要泄露敏感信息 记录与安全相关的错误 实施适当的清理 处理 DoS 场景 调试和监控（Debugging and Monitoring） # 1 . 日志记录（Logging） 记录协议事件 跟踪消息流 监控性能 记录错误 2 . 诊断（Diagnostics） 实施健康检查 监视连接状态 跟踪资源使用情况 分析性能 3 . 测试（Testing） 测试不同的传输 验证错误处理 检查边缘情况 负载测试服务器 修改于 2026-08-10 05:39:06 上一页 调试器 Inspector 下一页 资源 Resources",
+            "metadata": {
+              "url": "https://mcp-docs.apifox.cn/6175155m0",
+              "status_code": 200,
+              "content_length": 2478,
+              "truncated": false
+            },
+            "urls": [
+              "https://mcp-docs.apifox.cn/6175155m0"
+            ]
+          }
+        ],
+        "warnings": [
+          "忽略失败或不支持的 observation（step 1）：工具执行失败。",
+          "忽略失败或不支持的 observation（step 4）：工具执行失败。",
+          "重复来源 URL: https://mcp-docs.apifox.cn/6175155m0"
+        ],
+        "coverage": {
+          "covered_terms": [
+            "核心架构",
+            "MCP"
+          ],
+          "missing_terms": [],
+          "coverage_ratio": 1.0,
+          "warnings": []
+        },
+        "summary": "检查完成：2 条成功 Evidence，3 条 warning。"
+      },
+      "metrics": {
+        "baseline": {
+          "task_completion": 1.0,
+          "evidence_coverage": null,
+          "citation_traceability": null,
+          "evidence_sufficiency": null,
+          "latency": 90.15834949999407
+        },
+        "agent": {
+          "task_completion": null,
+          "evidence_coverage": null,
+          "citation_traceability": null,
+          "evidence_sufficiency": null,
+          "latency": 177.78993739999714
+        }
+      },
+      "baseline_error": null,
+      "agent_error": "final LLM call timed out after 150s (model=qwen3:8b)",
+      "agent_events": [
+        {
+          "step": 1,
+          "stage": "router",
+          "action": "ROUTER",
+          "query": "",
+          "status": "running",
+          "success": null,
+          "elapsed": 0.0002238000015495345
+        },
+        {
+          "step": 1,
+          "stage": "router",
+          "action": "ROUTER",
+          "query": "",
+          "status": "completed",
+          "success": true,
+          "elapsed": 4.970549300007406
+        },
+        {
+          "step": 1,
+          "action": "SEARCH",
+          "query": "MCP 官方资料",
+          "status": "running",
+          "success": null,
+          "elapsed": 4.970798800000921
+        },
+        {
+          "step": 1,
+          "stage": "tool",
+          "action": "SEARCH",
+          "query": "MCP 官方资料",
+          "status": "running",
+          "success": null,
+          "elapsed": 4.970806400000583
+        },
+        {
+          "step": 1,
+          "stage": "tool",
+          "action": "SEARCH",
+          "query": "MCP 官方资料",
+          "status": "completed",
+          "success": false,
+          "error": "搜索请求超过 10 秒，已超时。",
+          "elapsed": 14.978667300005327
+        },
+        {
+          "step": 2,
+          "stage": "router",
+          "action": "ROUTER",
+          "query": "",
+          "status": "running",
+          "success": null,
+          "elapsed": 14.978714400000172
+        },
+        {
+          "step": 2,
+          "stage": "router",
+          "action": "ROUTER",
+          "query": "",
+          "status": "completed",
+          "success": true,
+          "elapsed": 15.81879079999635
+        },
+        {
+          "step": 2,
+          "action": "SEARCH",
+          "query": "MCP 核心架构",
+          "status": "running",
+          "success": null,
+          "elapsed": 15.818947499996284
+        },
+        {
+          "step": 2,
+          "stage": "tool",
+          "action": "SEARCH",
+          "query": "MCP 核心架构",
+          "status": "running",
+          "success": null,
+          "elapsed": 15.818961099997978
+        },
+        {
+          "step": 2,
+          "stage": "tool",
+          "action": "SEARCH",
+          "query": "MCP 核心架构",
+          "status": "completed",
+          "success": true,
+          "error": null,
+          "elapsed": 22.901148300006753
+        },
+        {
+          "step": 3,
+          "stage": "router",
+          "action": "ROUTER",
+          "query": "",
+          "status": "running",
+          "success": null,
+          "elapsed": 22.901163100003032
+        },
+        {
+          "step": 3,
+          "stage": "router",
+          "action": "ROUTER",
+          "query": "",
+          "status": "completed",
+          "success": true,
+          "elapsed": 24.160098699998343
+        },
+        {
+          "step": 3,
+          "action": "WEB_READ",
+          "query": "https://mcp-docs.apifox.cn/6175155m0",
+          "status": "running",
+          "success": null,
+          "elapsed": 24.16023249999853
+        },
+        {
+          "step": 3,
+          "stage": "tool",
+          "action": "WEB_READ",
+          "query": "https://mcp-docs.apifox.cn/6175155m0",
+          "status": "running",
+          "success": null,
+          "elapsed": 24.160239000004367
+        },
+        {
+          "step": 3,
+          "stage": "tool",
+          "action": "WEB_READ",
+          "query": "https://mcp-docs.apifox.cn/6175155m0",
+          "status": "completed",
+          "success": true,
+          "error": null,
+          "elapsed": 24.582665399997495
+        },
+        {
+          "step": 4,
+          "stage": "router",
+          "action": "ROUTER",
+          "query": "",
+          "status": "running",
+          "success": null,
+          "elapsed": 24.582678100006888
+        },
+        {
+          "step": 4,
+          "stage": "router",
+          "action": "ROUTER",
+          "query": "",
+          "status": "completed",
+          "success": true,
+          "elapsed": 26.268523300008383
+        },
+        {
+          "step": 4,
+          "action": "WEB_READ",
+          "query": "",
+          "status": "running",
+          "success": null,
+          "elapsed": 26.2687433000101
+        },
+        {
+          "step": 4,
+          "stage": "tool",
+          "action": "WEB_READ",
+          "query": "",
+          "status": "running",
+          "success": null,
+          "elapsed": 26.268757199999527
+        },
+        {
+          "step": 4,
+          "stage": "tool",
+          "action": "WEB_READ",
+          "query": "",
+          "status": "completed",
+          "success": false,
+          "error": "Action 缺少有效 query。",
+          "elapsed": 26.268773500007228
+        },
+        {
+          "step": 4,
+          "stage": "final",
+          "action": "FINAL",
+          "query": "",
+          "status": "running",
+          "success": null,
+          "elapsed": 26.268827399995644
+        },
+        {
+          "step": 4,
+          "stage": "final",
+          "action": "FINAL",
+          "query": "",
+          "status": "completed",
+          "success": false,
+          "error": "final LLM call timed out after 150s (model=qwen3:8b)",
+          "elapsed": 176.27392659999896
+        }
+      ],
+      "agent_last_event": {
+        "step": 4,
+        "stage": "final",
+        "action": "FINAL",
+        "query": "",
+        "status": "completed",
+        "success": false,
+        "error": "final LLM call timed out after 150s (model=qwen3:8b)",
+        "elapsed": 176.27392659999896
+      }
+    },
+    {
+      "case_id": "T5",
+      "category": "hybrid_research",
+      "question": "根据我的本地 X-ray 项目资料分析 DenseFieldNet，然后搜索相关研究比较其特点、优势和局限。",
+      "baseline_answer": "根据现有知识库，DenseFieldNet 并非广为人知的 X-ray 分析模型，可能属于特定研究场景或未广泛发表的模型。以下基于通用深度学习框架和 X-ray 分析需求，结合可能的模型特性进行分析（注：若您的本地资料中包含具体论文或实现细节，请补充说明以提供更精准的分析）：\n\n---\n\n### **DenseFieldNet 的可能特性**\n1. **密集特征提取**  \n   - 可能基于密集连接（Dense Connections）设计，类似 DenseNet，通过跨层特征重用提升梯度流动和特征多样性。\n   - 在 X-ray 图像中，可能用于捕捉细微的病变特征（如骨折线、肺部结节等）。\n\n2. **场感知建模**  \n   - \"Field\" 可能指对图像局部区域（如骨骼、软组织）的建模能力，结合注意力机制（如 Transformer）或卷积操作，增强对复杂结构的感知。\n\n3. **任务适配性**  \n   - 可能针对 X-ray 分析的特定任务（如分割、分类、检测）优化，例如：\n     - **分割**：通过密集特征提取实现高精度边缘分割。\n     - **分类**：结合全局特征聚合进行病变分类。\n\n---\n\n### **与其他模型的对比分析**\n| 特性                | DenseFieldNet（假设）        | U-Net（经典分割模型）       | ResNet（特征提取）         | Transformer（长距离依赖） |\n|---------------------|-----------------------------|-----------------------------|-----------------------------|---------------------------|\n| **密集连接**        | ✅（类似 DenseNet）         | ❌（标准 U-Net 无密集连接） | ❌（ResNet 有密集连接）    | ❌（Transformer 无）       |\n| **注意力机制**      | 可能集成（如自注意力）     | ❌（传统 U-Net 无）         | ❌（ResNet 无）             | ✅（Transformer 核心）    |\n| **计算复杂度**      | 中等（依赖密集连接）       | 中等（编码器-解码器结构）   | 中等（深度卷积）           | 高（自注意力计算）        |\n| **适用场景**        | 复杂结构分割/特征提取       | 医学图像分割               | 特征提取（可作为 backbone）| 长距离依赖任务（如报告生成） |\n\n---\n\n### **潜在优势**\n1. **特征复用效率**：密集连接可能提升特征提取效率，减少信息丢失。\n2. **局部-全局感知**：结合场建模和注意力机制，可能更适应 X-ray 图像的复杂纹理。\n3. **任务灵活性**：可适配分割、分类等多任务需求。\n\n---\n\n### **可能局限**\n1. **训练成本**：密集连接和注意力机制可能增加计算资源需求。\n2. **数据依赖性**：对标注数据质量敏感，X-ray 图像的标注成本较高。\n3. **泛化能力**：若未针对 X-ray 特征优化，可能在不同设备或成像条件下表现不足。\n\n---\n\n### **建议**\n1. **检查本地资料**：确认 DenseFieldNet 是否包含特定架构（如模块设计、损失函数）、训练数据集或实验结果。\n2. **对比实验**：若用于实际项目，建议与 U-Net、ResNet 或 Transformer 模型进行消融实验，验证其性能差异。\n3. **关注文献**：搜索关键词 \"DenseFieldNet X-ray\" 或相关论文，确认是否存在特定研究（如医学图像分析领域的 niche 模型）。\n\n如需进一步分析，请提供您的本地资料中的模型描述、论文链接或代码片段。",
+      "agent_answer": "## DenseFieldNet 技术分析报告\n\n### 一、核心特点\nDenseFieldNet 采用独特的密集回归架构设计，具备以下技术特征：\n1. **物理感知能力**：通过深层卷积堆叠结构提取光斑边缘的微弱梯度变化，可捕捉折射引起的\"红绿月牙\"特征偏移 [Evidence 1]\n2. **张量维度控制**：输入尺寸为512x512的单通道图像时，通过多层卷积核滑动扫描实现特征提取 [Evidence 1]\n3. **物理-神经网络映射**：解码阶段引入自适应全局池化层，强制映射至8x8输出矩阵，每个输出对应物理空间特定光斑 [Evidence 1]\n\n### 二、技术优势\n1. **亚像素级精度**：\n   - MAE: 0.072像素\n   - RMSE: 0.085像素\n   - Peak Error: <0.15像素\n   - 精度超越传统一阶解析算法，满足X射线折射成像对微米级偏移的监测需求 [Evidence 1]\n2. **鲁棒性表现**：\n   - 在背景噪声强度σ_noise≤0.03时保持15%以下精度退化\n   - 热力图与真值物理场呈现高度拓扑一致性 [Evidence 1]\n\n### 三、技术局限\n1. **边界效应**：\n   - 卷积核填充操作导致边缘区域信息丢失，误差峰值集中在画布边缘\n   - 建议采用反射填充或空间注意力机制改进 [Evidence 1]\n2. **噪声敏感性**：\n   - 当σ_noise>0.03时，模型精度出现显著退化 [Evidence 1]\n\n## 参考来源\n- [Evidence 1] 本地知识库：提供DenseFieldNet架构设计、性能指标及X-ray应用细节\n- [Evidence 2] 网络搜索结果：未覆盖X-ray相关比较对象，证据覆盖不足 [Evidence Coverage Ratio: 0.50]\n\n注：当前证据未覆盖全部比较对象，无法完成完整的技术对比分析。建议补充其他研究在X-ray场景下的性能基准数据。",
+      "baseline_status": "success",
+      "agent_status": "success",
+      "baseline_latency": 102.91764800000237,
+      "agent_latency": 147.87268700001005,
+      "observations": [
+        {
+          "step": 1,
+          "action": "RAG",
+          "query": "DenseFieldNet 研究比较特点优势局限",
+          "tool_result": {
+            "success": true,
+            "source": "local_rag",
+            "content": "【本地知识片段】\nNet) 架构设计  \n针对本课题对亚像素精度的严苛要求，本方案自主设计了  DenseFieldNet 密集回归架\n构。该网络并非简单的图像分类器，而是具备空间感知能力的物理信息提取器。  \n1. 编码器与特征提取逻辑  \n网络前端采用深层卷积堆叠结构作为编码器， 利用残差感知机制提取光斑边缘的微弱梯\n度变化。通过多层卷积核的滑动扫描，模型能够敏感地捕捉到由于折射引起的“红绿月牙”\n式特征偏移。  \n2. 解码器与密集场对齐层  \n\n \n 在解码阶段，网络引入了自适应全局池化层，将其强制映射至 8 x8的输出矩阵。每一组\n输出对应于物理空间中的一个特定光斑。这种“物理 -神经网络”一一对应的设计方案，显\n著降低了传统全连接层带来的参数冗余，提高了模型的解释性[8]。 \n3. 张量维度演变与感受野分析  \nDenseFieldNet 的有效性不仅建立在宏观架构上，更体现在其精确的张量维度控制中。  \n当一张尺寸为 512x512的单通道灰度图像输入网络时，其初始张量形状为 [Batch_Size,\n 1,512,512] 。 \n(1) 浅层特征提取： 数据首先经过  kernel_si\n\n【本地知识片段】\n高度的拓扑一致性，\n成功捕捉到了场中心的高梯度区域。  \n(2) 矢量场对齐 ： 通过叠加预测矢量与物理真值， 我们发现模型在边缘复杂噪声干扰下，\n依然保持了良好的矢量方向敏感度。  \n \n  \n图5 基于 DenseFieldNet 的模拟验证样本位移场反演结果 ，分别展示了模拟 位移场真值 （左）、DenseFi\neldNet 模型预测热力图 （中）以及两者间的亚像素残差分布图 （右） \n（四）误差来源分析与鲁棒性讨论  \n尽管 DenseFieldNet 表现出极高的精度，但在讨论中仍需关注其在极端条件下的局限\n性。 \n1. 边界效应  (Edge Effects) 与离散化误差  \n\n \n 通过对残差分布图的深度分析，我们发现误差峰值主要集中在画布的最边缘区域。这是\n由于卷积核在图像边缘的填充操作导致了部分感受野信息的丢失。 未来的改进方向可考虑采\n用反射填充或引入空间注意力机制来增强边界特征的权重。  \n2. 散粒噪声对亚像素反演的干扰上限  \n当背景噪声强度σ _{noise} 超过0.03时，模型精度会出现约 15%的退化。这说明模型\n在提取“物理梯度”时，仍受限于光学探\n\n【本地知识片段】\n \n通过对 1000 组独立测试样本的预测结果进行统计，本算法在± 5像素的动态量程内，\n取得了显著的精度突破：  \n• 平均绝对误差  (MAE)：0.072像素。 \n• 均方根误差  (RMSE)：0.085像素。 \n• 峰值误差  (Peak Error) ：严格控制在 0.15像素以内。  \n\n \n 这一数据证明， DenseFieldNet 能够捕捉到光斑边缘极微弱的亮度梯度变化（即“红绿\n月牙”特征），其精度已完全覆盖并超越了传统的一阶解析算法，满足了  X 射线折射成像\n对微米级偏移的监测需求。  \n（三）验证样本的闭环审计  \n针对指导教师提供的 模拟校验样本（见图  3.2），本研究进行了针对性的泛化性测试。  \n1. 真实位移场反演表现  \n指导教师提供的样本涵盖了复杂的局部相位梯度变化。如图  3.2 所示，DenseFieldNe\nt 在处理该样本时，能够精准还原出光斑阵列的非线性偏移趋势。  \n(1) 热力图吻合度 ： 预测产生的位移标量热力图与真值物理场呈现出高度的拓扑一致性，\n成功捕捉到了场中心的高梯度区域。  \n(2) 矢量场对齐 ： 通过叠加预测矢量与",
+            "metadata": {
+              "top_k": 3,
+              "result_count": 3
+            }
+          }
+        },
+        {
+          "step": 2,
+          "action": "SEARCH",
+          "query": "DenseFieldNet 研究比较特点优势局限",
+          "tool_result": {
+            "success": true,
+            "source": "web",
+            "content": "【标题】: 【论文解读】DenseNet：通过密集连接提高CNN信息流动效率\n【URL】: https://zhuanlan.zhihu.com/p/12093114646\n【摘要】: CNN领域经典论文： [1608.06993] Densely Connected Convolutional NetworksTL;DR动机：之前的工作大都通过短连接来改善信息和梯度在网络中的流动。但短连接通常仅在相邻层或相隔几层之间存在，信息仍然需要经过多…\n\n【标题】: DenseNet论文解析 - 知乎\n【URL】: https://zhuanlan.zhihu.com/p/498713323\n【摘要】: image-20210915132656969 1 引言 卷积神经网络 (CNN) 已成为视觉对象识别的主要机器学习方法。尽管它们最初是在 20 多年前推出的 [18]，但直到最近，计算机硬件和网络结构的改进才使真正深度 CNN 的训练成为可能。最初的 LeNet5 [19] 由 5 层组成，VGG 有 19 个 [29]，仅在去年 Highway Networks [34] 和 Residual Networks ...\n\n【标题】: 经典神经网络论文超详细解读（六）——DenseNet学习笔记（翻译＋精读＋代码复现）_densenet论文-CSDN博客\n【URL】: https://blog.csdn.net/weixin_43334693/article/details/128478420\n【摘要】: 前言 上一篇我们介绍了ResNet： 经典神经网络论文超详细解读（五）——ResNet（残差网络）学习笔记（翻译＋精读＋代码复现） ResNet通过短路连接，可以训练出更深的CNN模型，从而实现更高的准确度。今天我们要介绍的是 DenseNet (《Densely connected convolutional networks》) 模型，它的基本思路与ResNet一致 ...",
+            "metadata": {
+              "result_count": 3
+            }
+          }
+        },
+        {
+          "step": 3,
+          "action": "WEB_READ",
+          "query": "https://zhuanlan.zhihu.com/p/498713323",
+          "tool_result": {
+            "success": false,
+            "source": "web_reader",
+            "error": "网页请求失败: 403 Client Error: Forbidden for url: https://zhuanlan.zhihu.com/p/498713323",
+            "metadata": {
+              "url": "https://zhuanlan.zhihu.com/p/498713323"
+            }
+          }
+        },
+        {
+          "step": 4,
+          "action": "FINAL",
+          "query": "",
+          "tool_result": {
+            "success": false,
+            "source": "final",
+            "error": "Action 缺少有效 query。"
+          }
+        }
+      ],
+      "verification": {
+        "success": false,
+        "verified_evidence": [
+          {
+            "evidence_id": 1,
+            "source": "local_rag",
+            "source_type": "local_document",
+            "source_quality": "high",
+            "step": 1,
+            "action": "RAG",
+            "query": "DenseFieldNet 研究比较特点优势局限",
+            "content": "【本地知识片段】\nNet) 架构设计  \n针对本课题对亚像素精度的严苛要求，本方案自主设计了  DenseFieldNet 密集回归架\n构。该网络并非简单的图像分类器，而是具备空间感知能力的物理信息提取器。  \n1. 编码器与特征提取逻辑  \n网络前端采用深层卷积堆叠结构作为编码器， 利用残差感知机制提取光斑边缘的微弱梯\n度变化。通过多层卷积核的滑动扫描，模型能够敏感地捕捉到由于折射引起的“红绿月牙”\n式特征偏移。  \n2. 解码器与密集场对齐层  \n\n \n 在解码阶段，网络引入了自适应全局池化层，将其强制映射至 8 x8的输出矩阵。每一组\n输出对应于物理空间中的一个特定光斑。这种“物理 -神经网络”一一对应的设计方案，显\n著降低了传统全连接层带来的参数冗余，提高了模型的解释性[8]。 \n3. 张量维度演变与感受野分析  \nDenseFieldNet 的有效性不仅建立在宏观架构上，更体现在其精确的张量维度控制中。  \n当一张尺寸为 512x512的单通道灰度图像输入网络时，其初始张量形状为 [Batch_Size,\n 1,512,512] 。 \n(1) 浅层特征提取： 数据首先经过  kernel_si\n\n【本地知识片段】\n高度的拓扑一致性，\n成功捕捉到了场中心的高梯度区域。  \n(2) 矢量场对齐 ： 通过叠加预测矢量与物理真值， 我们发现模型在边缘复杂噪声干扰下，\n依然保持了良好的矢量方向敏感度。  \n \n  \n图5 基于 DenseFieldNet 的模拟验证样本位移场反演结果 ，分别展示了模拟 位移场真值 （左）、DenseFi\neldNet 模型预测热力图 （中）以及两者间的亚像素残差分布图 （右） \n（四）误差来源分析与鲁棒性讨论  \n尽管 DenseFieldNet 表现出极高的精度，但在讨论中仍需关注其在极端条件下的局限\n性。 \n1. 边界效应  (Edge Effects) 与离散化误差  \n\n \n 通过对残差分布图的深度分析，我们发现误差峰值主要集中在画布的最边缘区域。这是\n由于卷积核在图像边缘的填充操作导致了部分感受野信息的丢失。 未来的改进方向可考虑采\n用反射填充或引入空间注意力机制来增强边界特征的权重。  \n2. 散粒噪声对亚像素反演的干扰上限  \n当背景噪声强度σ _{noise} 超过0.03时，模型精度会出现约 15%的退化。这说明模型\n在提取“物理梯度”时，仍受限于光学探\n\n【本地知识片段】\n \n通过对 1000 组独立测试样本的预测结果进行统计，本算法在± 5像素的动态量程内，\n取得了显著的精度突破：  \n• 平均绝对误差  (MAE)：0.072像素。 \n• 均方根误差  (RMSE)：0.085像素。 \n• 峰值误差  (Peak Error) ：严格控制在 0.15像素以内。  \n\n \n 这一数据证明， DenseFieldNet 能够捕捉到光斑边缘极微弱的亮度梯度变化（即“红绿\n月牙”特征），其精度已完全覆盖并超越了传统的一阶解析算法，满足了  X 射线折射成像\n对微米级偏移的监测需求。  \n（三）验证样本的闭环审计  \n针对指导教师提供的 模拟校验样本（见图  3.2），本研究进行了针对性的泛化性测试。  \n1. 真实位移场反演表现  \n指导教师提供的样本涵盖了复杂的局部相位梯度变化。如图  3.2 所示，DenseFieldNe\nt 在处理该样本时，能够精准还原出光斑阵列的非线性偏移趋势。  \n(1) 热力图吻合度 ： 预测产生的位移标量热力图与真值物理场呈现出高度的拓扑一致性，\n成功捕捉到了场中心的高梯度区域。  \n(2) 矢量场对齐 ： 通过叠加预测矢量与",
+            "metadata": {
+              "top_k": 3,
+              "result_count": 3
+            },
+            "urls": []
+          },
+          {
+            "evidence_id": 2,
+            "source": "web",
+            "source_type": "search_result",
+            "source_quality": "low",
+            "step": 2,
+            "action": "SEARCH",
+            "query": "DenseFieldNet 研究比较特点优势局限",
+            "content": "【标题】: 【论文解读】DenseNet：通过密集连接提高CNN信息流动效率\n【URL】: https://zhuanlan.zhihu.com/p/12093114646\n【摘要】: CNN领域经典论文： [1608.06993] Densely Connected Convolutional NetworksTL;DR动机：之前的工作大都通过短连接来改善信息和梯度在网络中的流动。但短连接通常仅在相邻层或相隔几层之间存在，信息仍然需要经过多…\n\n【标题】: DenseNet论文解析 - 知乎\n【URL】: https://zhuanlan.zhihu.com/p/498713323\n【摘要】: image-20210915132656969 1 引言 卷积神经网络 (CNN) 已成为视觉对象识别的主要机器学习方法。尽管它们最初是在 20 多年前推出的 [18]，但直到最近，计算机硬件和网络结构的改进才使真正深度 CNN 的训练成为可能。最初的 LeNet5 [19] 由 5 层组成，VGG 有 19 个 [29]，仅在去年 Highway Networks [34] 和 Residual Networks ...\n\n【标题】: 经典神经网络论文超详细解读（六）——DenseNet学习笔记（翻译＋精读＋代码复现）_densenet论文-CSDN博客\n【URL】: https://blog.csdn.net/weixin_43334693/article/details/128478420\n【摘要】: 前言 上一篇我们介绍了ResNet： 经典神经网络论文超详细解读（五）——ResNet（残差网络）学习笔记（翻译＋精读＋代码复现） ResNet通过短路连接，可以训练出更深的CNN模型，从而实现更高的准确度。今天我们要介绍的是 DenseNet (《Densely connected convolutional networks》) 模型，它的基本思路与ResNet一致 ...",
+            "metadata": {
+              "result_count": 3
+            },
+            "urls": [
+              "https://zhuanlan.zhihu.com/p/12093114646",
+              "https://zhuanlan.zhihu.com/p/498713323",
+              "https://blog.csdn.net/weixin_43334693/article/details/128478420"
+            ]
+          }
+        ],
+        "warnings": [
+          "忽略失败或不支持的 observation（step 3）：工具执行失败。",
+          "忽略失败或不支持的 observation（step 4）：工具执行失败。",
+          "Evidence 未覆盖全部比较对象，当前证据不足以完成完整比较。"
+        ],
+        "coverage": {
+          "covered_terms": [
+            "DenseFieldNet"
+          ],
+          "missing_terms": [
+            "X-ray"
+          ],
+          "coverage_ratio": 0.5,
+          "warnings": [
+            "Evidence 未覆盖全部比较对象，当前证据不足以完成完整比较。"
+          ]
+        },
+        "summary": "检查完成：2 条成功 Evidence，3 条 warning。"
+      },
+      "metrics": {
+        "baseline": {
+          "task_completion": 1.0,
+          "evidence_coverage": null,
+          "citation_traceability": null,
+          "evidence_sufficiency": null,
+          "latency": 102.91764800000237
+        },
+        "agent": {
+          "task_completion": 1.0,
+          "evidence_coverage": 0.5,
+          "citation_traceability": 1.0,
+          "evidence_sufficiency": 0.0,
+          "latency": 147.87268700001005
+        }
+      },
+      "baseline_error": null,
+      "agent_error": "web_reader: 网页请求失败: 403 Client Error: Forbidden for url: https://zhuanlan.zhihu.com/p/498713323; final: Action 缺少有效 query。",
+      "agent_events": [
+        {
+          "step": 1,
+          "stage": "router",
+          "action": "ROUTER",
+          "query": "",
+          "status": "running",
+          "success": null,
+          "elapsed": 8.279999019578099e-05
+        },
+        {
+          "step": 1,
+          "stage": "router",
+          "action": "ROUTER",
+          "query": "",
+          "status": "completed",
+          "success": true,
+          "elapsed": 5.099363000001176
+        },
+        {
+          "step": 1,
+          "action": "RAG",
+          "query": "DenseFieldNet 研究比较特点优势局限",
+          "status": "running",
+          "success": null,
+          "elapsed": 5.0996038999874145
+        },
+        {
+          "step": 1,
+          "stage": "tool",
+          "action": "RAG",
+          "query": "DenseFieldNet 研究比较特点优势局限",
+          "status": "running",
+          "success": null,
+          "elapsed": 5.099610399993253
+        },
+        {
+          "step": 1,
+          "stage": "tool",
+          "action": "RAG",
+          "query": "DenseFieldNet 研究比较特点优势局限",
+          "status": "completed",
+          "success": true,
+          "error": null,
+          "elapsed": 6.216741999989608
+        },
+        {
+          "step": 2,
+          "stage": "router",
+          "action": "ROUTER",
+          "query": "",
+          "status": "running",
+          "success": null,
+          "elapsed": 6.216762500000186
+        },
+        {
+          "step": 2,
+          "stage": "router",
+          "action": "ROUTER",
+          "query": "",
+          "status": "completed",
+          "success": true,
+          "elapsed": 7.6737960999889765
+        },
+        {
+          "step": 2,
+          "action": "SEARCH",
+          "query": "DenseFieldNet 研究比较特点优势局限",
+          "status": "running",
+          "success": null,
+          "elapsed": 7.673932599995169
+        },
+        {
+          "step": 2,
+          "stage": "tool",
+          "action": "SEARCH",
+          "query": "DenseFieldNet 研究比较特点优势局限",
+          "status": "running",
+          "success": null,
+          "elapsed": 7.673941000000923
+        },
+        {
+          "step": 2,
+          "stage": "tool",
+          "action": "SEARCH",
+          "query": "DenseFieldNet 研究比较特点优势局限",
+          "status": "completed",
+          "success": true,
+          "error": null,
+          "elapsed": 15.504145999992033
+        },
+        {
+          "step": 3,
+          "stage": "router",
+          "action": "ROUTER",
+          "query": "",
+          "status": "running",
+          "success": null,
+          "elapsed": 15.504156999988481
+        },
+        {
+          "step": 3,
+          "stage": "router",
+          "action": "ROUTER",
+          "query": "",
+          "status": "completed",
+          "success": true,
+          "elapsed": 16.760265799995977
+        },
+        {
+          "step": 3,
+          "action": "WEB_READ",
+          "query": "https://zhuanlan.zhihu.com/p/498713323",
+          "status": "running",
+          "success": null,
+          "elapsed": 16.760434899988468
+        },
+        {
+          "step": 3,
+          "stage": "tool",
+          "action": "WEB_READ",
+          "query": "https://zhuanlan.zhihu.com/p/498713323",
+          "status": "running",
+          "success": null,
+          "elapsed": 16.760441299993545
+        },
+        {
+          "step": 3,
+          "stage": "tool",
+          "action": "WEB_READ",
+          "query": "https://zhuanlan.zhihu.com/p/498713323",
+          "status": "completed",
+          "success": false,
+          "error": "网页请求失败: 403 Client Error: Forbidden for url: https://zhuanlan.zhihu.com/p/498713323",
+          "elapsed": 17.068231799989007
+        },
+        {
+          "step": 4,
+          "stage": "router",
+          "action": "ROUTER",
+          "query": "",
+          "status": "running",
+          "success": null,
+          "elapsed": 17.068253599994932
+        },
+        {
+          "step": 4,
+          "stage": "router",
+          "action": "ROUTER",
+          "query": "",
+          "status": "completed",
+          "success": true,
+          "elapsed": 18.067517799994675
+        },
+        {
+          "step": 4,
+          "action": "WEB_READ",
+          "query": "https://zhuanlan.zhihu.com/p/498713323",
+          "status": "running",
+          "success": null,
+          "elapsed": 18.067924799994216
+        },
+        {
+          "step": 4,
+          "stage": "tool",
+          "action": "FINAL",
+          "query": "",
+          "status": "running",
+          "success": null,
+          "elapsed": 18.06793979999202
+        },
+        {
+          "step": 4,
+          "stage": "tool",
+          "action": "FINAL",
+          "query": "",
+          "status": "completed",
+          "success": false,
+          "error": "Action 缺少有效 query。",
+          "elapsed": 18.067943399990327
+        },
+        {
+          "step": 4,
+          "stage": "final",
+          "action": "FINAL",
+          "query": "",
+          "status": "running",
+          "success": null,
+          "elapsed": 18.06800229998771
+        },
+        {
+          "step": 4,
+          "stage": "final",
+          "action": "FINAL",
+          "query": "",
+          "status": "completed",
+          "success": true,
+          "elapsed": 146.32071239998913
+        }
+      ],
+      "agent_last_event": {
+        "step": 4,
+        "stage": "final",
+        "action": "FINAL",
+        "query": "",
+        "status": "completed",
+        "success": true,
+        "elapsed": 146.32071239998913
+      }
+    },
+    {
+      "case_id": "T6",
+      "category": "insufficient_evidence",
+      "question": "分析一个当前 Evidence 中没有覆盖的技术对象 QuantumMesh-404，并判断现有证据是否足够回答。",
+      "baseline_answer": "当前 Evidence 中未提及 \"QuantumMesh-404\" 这一技术对象，因此无法基于现有证据进行分析。以下是关键判断：\n\n1. **证据覆盖状态**  \n   - 现有技术文档、专利数据库、学术论文等公开资料中未检索到与 \"QuantumMesh-404\" 直接相关的明确信息。\n   - 若该名称为内部项目代号、未公开技术或虚构概念，则现有证据完全无法覆盖。\n\n2. **技术可能性分析**  \n   - 假设 \"QuantumMesh-404\" 是量子计算或量子通信领域的技术（如量子网络架构、量子加密协议等），但缺乏具体技术参数（如拓扑结构、算法细节、实现方式等），无法判断其可行性或创新性。\n   - 若涉及硬件设备（如量子芯片、光子模块等），需明确其物理特性、性能指标及应用场景，现有信息不足以支持分析。\n\n3. **建议行动方向**  \n   - **补充上下文**：提供技术领域的具体背景（如量子计算、网络安全、分布式系统等）或相关技术的定义，有助于缩小分析范围。\n   - **验证来源**：确认该名称是否来自特定文献、专利或商业产品（如企业内部系统、未公开的科研项目等）。\n   - **专业资源检索**：若需进一步分析，建议通过学术数据库（如 arXiv、IEEE Xplore）或行业报告获取更详细的信息。\n\n**结论**：现有证据无法回答关于 \"QuantumMesh-404\" 的技术问题。需补充明确的技术定义、领域背景或来源信息后，方可进行针对性分析。",
+      "agent_answer": "## 技术分析结论\n\n当前 Evidence 未覆盖技术对象 **QuantumMesh-404**，现有资料无法支持对该技术对象的分析。  \n\n### 关键判断依据\n1. **证据覆盖缺失**  \n   - Evidence 1（本地知识库）仅涉及 X 射线成像、探测器芯片、磁铁设计等领域的学术研究，未提及 QuantumMesh-404 [Evidence 1]。  \n   - Evidence 2（网络搜索结果）提供的链接指向 GitHub 项目、产品手册和用户指南，内容与 QuantumMesh-404 无关，且未明确关联到该技术对象 [Evidence 2]。  \n   - **Coverage Ratio 为 0.00**，表明 Evidence 未涉及 QuantumMesh-404 的任何信息。  \n\n2. **来源可靠性不足**  \n   - Evidence 2 的 Web 搜索结果存在 **warnings**，提示工具执行失败或来源不可靠，无法作为有效依据 [Evidence 2]。  \n   - 本地知识库（Evidence 1）虽为高可信度来源，但其内容与目标技术对象无直接关联。  \n\n3. **无直接关联信息**  \n   - 所有 Evidence 中未出现 QuantumMesh-404 的技术描述、功能定义或相关研究记录。  \n\n---\n\n## 参考来源\n- [Evidence 1] Local RAG：本地知识库  \n- [Evidence 2] Web Search：https://github.com/Cybervault-Network/QuantumMesh, https://device.report/manual/4392095, https://aerocool.io/product/quantum-mesh/  \n\n**结论**：现有 Evidence 无法回答关于 QuantumMesh-404 的技术问题，需补充相关技术文档或研究资料。",
+      "baseline_status": "success",
+      "agent_status": "success",
+      "baseline_latency": 78.60769250000885,
+      "agent_latency": 138.51230719999876,
+      "observations": [
+        {
+          "step": 1,
+          "action": "RAG",
+          "query": "QuantumMesh-404",
+          "tool_result": {
+            "success": true,
+            "source": "local_rag",
+            "content": "【本地知识片段】\n):1662 -1665. \n[5] 胡仁芳.X射线光栅相位衬度成像实验技术和应用研究 [D].中国科学技术大学 ,2017.  \n[6] 张催.基于常规 X射线源的相位衬度成像方法研究 [D].兰州大学 ,2018.  \n \n [7] 王迪.应用于X射线像素探测器读出芯片的自动测试系统设计 [D].黑龙江大学 , 2025.  \n[8] 昝贵彬.X射线微结构阵列光源光栅相衬成像系统研究 [D].中国科学技术大学 ,2019.  \n[9] Zhu Jiawu,Zhang Miao,Wang Yong.Design and optimization of quadrupole and sextupole magn\nets for Shenzhen Innovation Light -source Facility storage ring[J]. 强激光与粒子束 ,2025,3\n7(7):83-90 \n六、心得体会  \n本次科研训练不仅是一次算法开发的过程，更是一次从 “单纯的学生思维 ”向“严谨\n的研究者思维 ”的痛苦蜕变。  \n1. 挫败与调适：从盲目调参到理性分析  \n在项目初期，\n\n【本地知识片段】\n} 超过0.03时，模型精度会出现约 15%的退化。这说明模型\n在提取“物理梯度”时，仍受限于光学探测器的固有噪声地板。通过进一步引入自适应去噪\n前端，有望进一步提升在极低剂量  X 射线环境下的反演稳定性。  \n四、结论  \n本研究针对  X 射线折射图像位移提取的精度瓶颈，提出并实现了一种基于  DenseFiel\ndNet 的密集回归算法管线。通过本次科研训练，得出以下主要结论：  \n1. 物理仿真引擎的有效性  \n自主研发的  V4 引擎通过二进制格式  (.npy) 存储与高斯势场模拟，成功突破了传统\n图像 8 位量化的精度上限，为亚像素研究提供了可靠的实验温床。  \n2. DenseFieldNet 的高精度表现  \n实验数据表明，该架构在± 5像素量程内实现了平均绝对误差  (MAE) 低0.08像素的极\n高精度，显著优于传统一阶解析算法。  \n3. Sim-to-Real 的可行性  \n通过三联图对 指导教师 提供的模拟样本进行审计， 证明了模型在引入复杂物理噪声后仍\n具备极强的泛化性能与鲁棒性，具备了部署至真实  X 射线折射成像系统的工程潜力[9]。 \n \n五、参考\n\n【本地知识片段】\n备极强的泛化性能与鲁棒性，具备了部署至真实  X 射线折射成像系统的工程潜力[9]。 \n \n五、参考文献  \n[1] 朱佩平,廖可梁,何其利,罗亮,葛永帅.X射线相位衬度成像的起源、发展和展望 [J].中国体视学与图\n像分析,2022,27(04):334 -354. \n[2] Florian T. Gassert, Theresa Urban, Manuela Frank, et al. Erratum: X -ray Dark -Field Ches\nt Imaging: Qualitative and Quantitative Results in Healthy Humans[J]. Radiology,2023,30\n6(2):e229037.  \n[3] 戚跃勇.硬X射线相位衬度成像在医学影像学中的应用 [J].中国医学影像技术 ,2004,(01):147 -149. \n[4] 刘鑫,郭金川,桂建保,牛憨笨.复色光源 X射线光栅衍射效率 [J].光子学报 ,2008,(08):1662 -1665. \n[5] 胡仁芳.X射线光栅相位衬度成像实验技术和应用研究 [D].中国",
+            "metadata": {
+              "top_k": 3,
+              "result_count": 3
+            }
+          }
+        },
+        {
+          "step": 2,
+          "action": "SEARCH",
+          "query": "QuantumMesh-404",
+          "tool_result": {
+            "success": false,
+            "source": "web",
+            "error": "搜索请求超过 10 秒，已超时。"
+          }
+        },
+        {
+          "step": 3,
+          "action": "SEARCH",
+          "query": "QuantumMesh-404 官方文档",
+          "tool_result": {
+            "success": true,
+            "source": "web",
+            "content": "【标题】: GitHub - Cybervault-Network/QuantumMesh: Empowering ...\n【URL】: https://github.com/Cybervault-Network/QuantumMesh\n【摘要】: Empowering connectivity with quantum-level security and AGI intelligence. - Cybervault-Network/QuantumMesh\n\n【标题】: AeroCool Quantum/Quantum Mesh Miditower User Manual\n【URL】: https://device.report/manual/4392095\n【摘要】: AeroCool Quantum/Quantum Mesh Miditower User Manual AeroCool Quantum/Quantum Mesh Miditower User Manual Front I/O Cable Connection Front I/O Connectors (Please refer to the motherboard's manual for further instructions). Note Specifications may yaw depending on your region. Contact your local retailer for more information. Accessory Bag Contents SSD Screw MB Screw PSU Screw PCI Screw HDD Screw ...\n\n【标题】: Quantum Mesh - AeroCool\n【URL】: https://aerocool.io/product/quantum-mesh/\n【摘要】: Featuring space grey metallic paint finishing with a mesh front panel design, this mid tower case provides improved air ventilation.",
+            "metadata": {
+              "result_count": 3
+            }
+          }
+        },
+        {
+          "step": 4,
+          "action": "SEARCH",
+          "query": "QuantumMesh-404 技术原理",
+          "tool_result": {
+            "success": false,
+            "source": "web",
+            "error": "搜索请求超过 10 秒，已超时。"
+          }
+        }
+      ],
+      "verification": {
+        "success": false,
+        "verified_evidence": [
+          {
+            "evidence_id": 1,
+            "source": "local_rag",
+            "source_type": "local_document",
+            "source_quality": "high",
+            "step": 1,
+            "action": "RAG",
+            "query": "QuantumMesh-404",
+            "content": "【本地知识片段】\n):1662 -1665. \n[5] 胡仁芳.X射线光栅相位衬度成像实验技术和应用研究 [D].中国科学技术大学 ,2017.  \n[6] 张催.基于常规 X射线源的相位衬度成像方法研究 [D].兰州大学 ,2018.  \n \n [7] 王迪.应用于X射线像素探测器读出芯片的自动测试系统设计 [D].黑龙江大学 , 2025.  \n[8] 昝贵彬.X射线微结构阵列光源光栅相衬成像系统研究 [D].中国科学技术大学 ,2019.  \n[9] Zhu Jiawu,Zhang Miao,Wang Yong.Design and optimization of quadrupole and sextupole magn\nets for Shenzhen Innovation Light -source Facility storage ring[J]. 强激光与粒子束 ,2025,3\n7(7):83-90 \n六、心得体会  \n本次科研训练不仅是一次算法开发的过程，更是一次从 “单纯的学生思维 ”向“严谨\n的研究者思维 ”的痛苦蜕变。  \n1. 挫败与调适：从盲目调参到理性分析  \n在项目初期，\n\n【本地知识片段】\n} 超过0.03时，模型精度会出现约 15%的退化。这说明模型\n在提取“物理梯度”时，仍受限于光学探测器的固有噪声地板。通过进一步引入自适应去噪\n前端，有望进一步提升在极低剂量  X 射线环境下的反演稳定性。  \n四、结论  \n本研究针对  X 射线折射图像位移提取的精度瓶颈，提出并实现了一种基于  DenseFiel\ndNet 的密集回归算法管线。通过本次科研训练，得出以下主要结论：  \n1. 物理仿真引擎的有效性  \n自主研发的  V4 引擎通过二进制格式  (.npy) 存储与高斯势场模拟，成功突破了传统\n图像 8 位量化的精度上限，为亚像素研究提供了可靠的实验温床。  \n2. DenseFieldNet 的高精度表现  \n实验数据表明，该架构在± 5像素量程内实现了平均绝对误差  (MAE) 低0.08像素的极\n高精度，显著优于传统一阶解析算法。  \n3. Sim-to-Real 的可行性  \n通过三联图对 指导教师 提供的模拟样本进行审计， 证明了模型在引入复杂物理噪声后仍\n具备极强的泛化性能与鲁棒性，具备了部署至真实  X 射线折射成像系统的工程潜力[9]。 \n \n五、参考\n\n【本地知识片段】\n备极强的泛化性能与鲁棒性，具备了部署至真实  X 射线折射成像系统的工程潜力[9]。 \n \n五、参考文献  \n[1] 朱佩平,廖可梁,何其利,罗亮,葛永帅.X射线相位衬度成像的起源、发展和展望 [J].中国体视学与图\n像分析,2022,27(04):334 -354. \n[2] Florian T. Gassert, Theresa Urban, Manuela Frank, et al. Erratum: X -ray Dark -Field Ches\nt Imaging: Qualitative and Quantitative Results in Healthy Humans[J]. Radiology,2023,30\n6(2):e229037.  \n[3] 戚跃勇.硬X射线相位衬度成像在医学影像学中的应用 [J].中国医学影像技术 ,2004,(01):147 -149. \n[4] 刘鑫,郭金川,桂建保,牛憨笨.复色光源 X射线光栅衍射效率 [J].光子学报 ,2008,(08):1662 -1665. \n[5] 胡仁芳.X射线光栅相位衬度成像实验技术和应用研究 [D].中国",
+            "metadata": {
+              "top_k": 3,
+              "result_count": 3
+            },
+            "urls": []
+          },
+          {
+            "evidence_id": 2,
+            "source": "web",
+            "source_type": "search_result",
+            "source_quality": "low",
+            "step": 3,
+            "action": "SEARCH",
+            "query": "QuantumMesh-404 官方文档",
+            "content": "【标题】: GitHub - Cybervault-Network/QuantumMesh: Empowering ...\n【URL】: https://github.com/Cybervault-Network/QuantumMesh\n【摘要】: Empowering connectivity with quantum-level security and AGI intelligence. - Cybervault-Network/QuantumMesh\n\n【标题】: AeroCool Quantum/Quantum Mesh Miditower User Manual\n【URL】: https://device.report/manual/4392095\n【摘要】: AeroCool Quantum/Quantum Mesh Miditower User Manual AeroCool Quantum/Quantum Mesh Miditower User Manual Front I/O Cable Connection Front I/O Connectors (Please refer to the motherboard's manual for further instructions). Note Specifications may yaw depending on your region. Contact your local retailer for more information. Accessory Bag Contents SSD Screw MB Screw PSU Screw PCI Screw HDD Screw ...\n\n【标题】: Quantum Mesh - AeroCool\n【URL】: https://aerocool.io/product/quantum-mesh/\n【摘要】: Featuring space grey metallic paint finishing with a mesh front panel design, this mid tower case provides improved air ventilation.",
+            "metadata": {
+              "result_count": 3
+            },
+            "urls": [
+              "https://github.com/Cybervault-Network/QuantumMesh",
+              "https://device.report/manual/4392095",
+              "https://aerocool.io/product/quantum-mesh/"
+            ]
+          }
+        ],
+        "warnings": [
+          "忽略失败或不支持的 observation（step 2）：工具执行失败。",
+          "忽略失败或不支持的 observation（step 4）：工具执行失败。"
+        ],
+        "coverage": {
+          "covered_terms": [],
+          "missing_terms": [
+            "QuantumMesh-404"
+          ],
+          "coverage_ratio": 0.0,
+          "warnings": []
+        },
+        "summary": "检查完成：2 条成功 Evidence，2 条 warning。"
+      },
+      "metrics": {
+        "baseline": {
+          "task_completion": 1.0,
+          "evidence_coverage": null,
+          "citation_traceability": null,
+          "evidence_sufficiency": null,
+          "latency": 78.60769250000885
+        },
+        "agent": {
+          "task_completion": 1.0,
+          "evidence_coverage": 0.0,
+          "citation_traceability": 1.0,
+          "evidence_sufficiency": 0.0,
+          "latency": 138.51230719999876
+        }
+      },
+      "baseline_error": null,
+      "agent_error": "web: 搜索请求超过 10 秒，已超时。; web: 搜索请求超过 10 秒，已超时。",
+      "agent_events": [
+        {
+          "step": 1,
+          "stage": "router",
+          "action": "ROUTER",
+          "query": "",
+          "status": "running",
+          "success": null,
+          "elapsed": 8.540000999346375e-05
+        },
+        {
+          "step": 1,
+          "stage": "router",
+          "action": "ROUTER",
+          "query": "",
+          "status": "completed",
+          "success": true,
+          "elapsed": 4.989195400004974
+        },
+        {
+          "step": 1,
+          "action": "RAG",
+          "query": "QuantumMesh-404",
+          "status": "running",
+          "success": null,
+          "elapsed": 4.989457800009404
+        },
+        {
+          "step": 1,
+          "stage": "tool",
+          "action": "RAG",
+          "query": "QuantumMesh-404",
+          "status": "running",
+          "success": null,
+          "elapsed": 4.989466700004414
+        },
+        {
+          "step": 1,
+          "stage": "tool",
+          "action": "RAG",
+          "query": "QuantumMesh-404",
+          "status": "completed",
+          "success": true,
+          "error": null,
+          "elapsed": 5.714784800002235
+        },
+        {
+          "step": 2,
+          "stage": "router",
+          "action": "ROUTER",
+          "query": "",
+          "status": "running",
+          "success": null,
+          "elapsed": 5.714805000010529
+        },
+        {
+          "step": 2,
+          "stage": "router",
+          "action": "ROUTER",
+          "query": "",
+          "status": "completed",
+          "success": true,
+          "elapsed": 7.068904300002032
+        },
+        {
+          "step": 2,
+          "action": "SEARCH",
+          "query": "QuantumMesh-404",
+          "status": "running",
+          "success": null,
+          "elapsed": 7.069049099998665
+        },
+        {
+          "step": 2,
+          "stage": "tool",
+          "action": "SEARCH",
+          "query": "QuantumMesh-404",
+          "status": "running",
+          "success": null,
+          "elapsed": 7.069057900007465
+        },
+        {
+          "step": 2,
+          "stage": "tool",
+          "action": "SEARCH",
+          "query": "QuantumMesh-404",
+          "status": "completed",
+          "success": false,
+          "error": "搜索请求超过 10 秒，已超时。",
+          "elapsed": 17.0727770000085
+        },
+        {
+          "step": 3,
+          "stage": "router",
+          "action": "ROUTER",
+          "query": "",
+          "status": "running",
+          "success": null,
+          "elapsed": 17.072811300007743
+        },
+        {
+          "step": 3,
+          "stage": "router",
+          "action": "ROUTER",
+          "query": "",
+          "status": "completed",
+          "success": true,
+          "elapsed": 17.940663200002746
+        },
+        {
+          "step": 3,
+          "action": "SEARCH",
+          "query": "QuantumMesh-404",
+          "status": "running",
+          "success": null,
+          "elapsed": 17.940795300004538
+        },
+        {
+          "step": 3,
+          "stage": "tool",
+          "action": "SEARCH",
+          "query": "QuantumMesh-404 官方文档",
+          "status": "running",
+          "success": null,
+          "elapsed": 17.940806700004032
+        },
+        {
+          "step": 3,
+          "stage": "tool",
+          "action": "SEARCH",
+          "query": "QuantumMesh-404 官方文档",
+          "status": "completed",
+          "success": true,
+          "error": null,
+          "elapsed": 25.001574000008986
+        },
+        {
+          "step": 4,
+          "stage": "router",
+          "action": "ROUTER",
+          "query": "",
+          "status": "running",
+          "success": null,
+          "elapsed": 25.00158900000679
+        },
+        {
+          "step": 4,
+          "stage": "router",
+          "action": "ROUTER",
+          "query": "",
+          "status": "completed",
+          "success": true,
+          "elapsed": 26.05901620000077
+        },
+        {
+          "step": 4,
+          "action": "SEARCH",
+          "query": "QuantumMesh-404 技术原理",
+          "status": "running",
+          "success": null,
+          "elapsed": 26.059173600006034
+        },
+        {
+          "step": 4,
+          "stage": "tool",
+          "action": "SEARCH",
+          "query": "QuantumMesh-404 技术原理",
+          "status": "running",
+          "success": null,
+          "elapsed": 26.059182500001043
+        },
+        {
+          "step": 4,
+          "stage": "tool",
+          "action": "SEARCH",
+          "query": "QuantumMesh-404 技术原理",
+          "status": "completed",
+          "success": false,
+          "error": "搜索请求超过 10 秒，已超时。",
+          "elapsed": 36.06304160000582
+        },
+        {
+          "step": 4,
+          "stage": "final",
+          "action": "FINAL",
+          "query": "",
+          "status": "running",
+          "success": null,
+          "elapsed": 36.063548300007824
+        },
+        {
+          "step": 4,
+          "stage": "final",
+          "action": "FINAL",
+          "query": "",
+          "status": "completed",
+          "success": true,
+          "elapsed": 136.89074499999697
+        }
+      ],
+      "agent_last_event": {
+        "step": 4,
+        "stage": "final",
+        "action": "FINAL",
+        "query": "",
+        "status": "completed",
+        "success": true,
+        "elapsed": 136.89074499999697
+      }
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+[
+  {
+    "id": "T1",
+    "category": "pure_technical",
+    "question": "解释 ResNet18 的残差连接为什么能够缓解深层网络训练中的梯度消失问题。",
+    "expected_terms": ["ResNet18", "残差连接"],
+    "requires_evidence": false
+  },
+  {
+    "id": "T2",
+    "category": "comparison",
+    "question": "比较 AgentBench、SWE-bench 和 GAIA 的测试目标、评测方式和主要局限性。",
+    "expected_terms": ["AgentBench", "SWE-bench", "GAIA"],
+    "requires_evidence": true
+  },
+  {
+    "id": "T3",
+    "category": "local_rag",
+    "question": "根据我的本地 X-ray 项目资料，分析 DenseFieldNet 的核心方法。",
+    "expected_terms": ["DenseFieldNet"],
+    "requires_evidence": true
+  },
+  {
+    "id": "T4",
+    "category": "web_research",
+    "question": "搜索 MCP（Model Context Protocol）的官方资料，并说明其核心架构。",
+    "expected_terms": ["MCP", "Model Context Protocol", "核心架构"],
+    "requires_evidence": true
+  },
+  {
+    "id": "T5",
+    "category": "hybrid_research",
+    "question": "根据我的本地 X-ray 项目资料分析 DenseFieldNet，然后搜索相关研究比较其特点、优势和局限。",
+    "expected_terms": ["DenseFieldNet"],
+    "requires_evidence": true
+  },
+  {
+    "id": "T6",
+    "category": "insufficient_evidence",
+    "question": "分析一个当前 Evidence 中没有覆盖的技术对象 QuantumMesh-404，并判断现有证据是否足够回答。",
+    "expected_terms": ["QuantumMesh-404"],
+    "requires_evidence": true
+  }
+]

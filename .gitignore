@@ -1,0 +1,13 @@
+venv/
+__pycache__/
+*.py[cod]
+*.bak
+*.zip
+.pytest_cache/
+.streamlit/
+.env
+.env.*
+
+# Local runtime and generated artifacts
+*.log
+*.tmp
