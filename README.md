@@ -138,6 +138,7 @@ Agent 唯一 case 级失败为 T4：Final `qwen3:8b` 达到 150 秒 timeout。Ba
 - Web Reader 可能受到目标网站 403、TLS、robots 或反爬策略影响。
 - Router 可能生成重复或近似的 Search query，当前去重仍不是完全可靠的语义去重。
 - `qwen3:8b` Final 响应时间受本地 Ollama、GPU/CPU 和上下文长度影响；T4 曾发生 150 秒 Final timeout。
+- Final 请求使用 `num_ctx=2048` 控制上下文显存压力；遇到明确的 CUDA/llama-server 崩溃时，会对同一请求执行一次 `num_gpu=0` CPU fallback。
 - Evidence Coverage 是术语覆盖率，不等价于事实正确率或来源可信度。
 - `chroma_db/` 是本地持久化知识库；更换 `data/test.pdf` 后需要重新构建知识库。
 - 当前项目面向本地演示和工程评估，不是生产级多用户服务。

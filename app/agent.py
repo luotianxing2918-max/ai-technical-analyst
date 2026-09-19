@@ -12,7 +12,7 @@ from verification import verify_observations
 MAX_ITERATIONS = 4
 ROUTER_MODEL = "qwen2.5:3b"
 FINAL_MODEL = "qwen3:8b"
-ROUTER_LLM_TIMEOUT = 15
+ROUTER_LLM_TIMEOUT = 30
 FINAL_LLM_TIMEOUT = 150
 
 
